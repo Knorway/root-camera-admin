@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import {
   Box,
   Button,
@@ -13,11 +12,6 @@ import {
   makeStyles,
   Switch
 } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { useRequest } from 'src/utils/useRequest';
-import { getStockById, getStocks, GET_STOCKS } from 'src/modules/stocks';
-import { matchRoutes, useMatch } from 'react-router';
-import routes from 'src/routes';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -25,8 +19,8 @@ const useStyles = makeStyles(() => ({
 
 const StockDetailIn = ({ stock }) => {
   const [state, setState] = useState({
-    checkedA: true,
-    checkedB: true
+    checkedA: false,
+    checkedB: false
   });
   const classes = useStyles();
 
@@ -67,7 +61,7 @@ const StockDetailIn = ({ stock }) => {
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="품번"
@@ -78,7 +72,7 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="일련번호"
@@ -89,7 +83,7 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="구매처"
@@ -100,7 +94,7 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="상품명"
@@ -111,8 +105,76 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                label="브랜드"
+                name="brand"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.brand}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                label="카테고리"
+                name="category"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.category}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                label="상태"
+                name="currentlyAt"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.currentlyAt}
+                variant="outlined"
+              />
+            </Grid>
+
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                label="현재 위치"
+                name="currentlyAt"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.currentlyAt}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                label="입고 날짜"
+                name="stockedAt"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.stockedAt}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                label="해당없음"
+                name="currentlyAt"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.currentlyAt}
+                variant="outlined"
+                disabled
+              />
+            </Grid>
             <Divider />
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
@@ -124,7 +186,7 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="구매가격 ₩"
@@ -135,7 +197,7 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="배대지비용"
@@ -146,7 +208,7 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="배송비"
@@ -157,7 +219,7 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="기타 추가 비용"
@@ -168,7 +230,7 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 helperText="자동계산필드"
@@ -178,6 +240,26 @@ const StockDetailIn = ({ stock }) => {
                 required
                 defaultValue={stock.totalPurchaseCosts}
                 variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                id="filled-textarea"
+                label="재고 특징 상세"
+                placeholder="Placeholder"
+                multiline
+                // variant="filled"
+                fullWidth
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                id="filled-textarea"
+                label="메타데이터"
+                placeholder="Placeholder"
+                multiline
+                // variant="filled"
+                fullWidth
               />
             </Grid>
 

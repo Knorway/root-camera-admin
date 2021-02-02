@@ -31,7 +31,7 @@ const data = [
       name: 'Ekaterina Tankova'
     },
     createdAt: 1555016400000,
-    status: 'pending'
+    status: '수리 중'
   },
   {
     id: uuid(),
@@ -41,7 +41,7 @@ const data = [
       name: 'Cao Yu'
     },
     createdAt: 1555016400000,
-    status: 'delivered'
+    status: '재고 있음'
   },
   {
     id: uuid(),
@@ -51,7 +51,7 @@ const data = [
       name: 'Alexa Richardson'
     },
     createdAt: 1554930000000,
-    status: 'refunded'
+    status: '입고 대기'
   },
   {
     id: uuid(),
@@ -61,7 +61,7 @@ const data = [
       name: 'Anje Keizer'
     },
     createdAt: 1554757200000,
-    status: 'pending'
+    status: '수리 중'
   },
   {
     id: uuid(),
@@ -71,7 +71,7 @@ const data = [
       name: 'Clarke Gillebert'
     },
     createdAt: 1554670800000,
-    status: 'delivered'
+    status: '재고 있음'
   },
   {
     id: uuid(),
@@ -81,7 +81,7 @@ const data = [
       name: 'Adam Denisov'
     },
     createdAt: 1554670800000,
-    status: 'delivered'
+    status: '재고 있음'
   }
 ];
 
@@ -97,62 +97,36 @@ const LatestOrders = ({ className, ...rest }) => {
   const [orders] = useState(data);
 
   return (
-    <Card
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <CardHeader title="Latest Orders" />
+    <Card className={clsx(classes.root, className)} {...rest}>
+      <CardHeader title="최근 추가된 재고" />
       <Divider />
       <PerfectScrollbar>
         <Box minWidth={800}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  Order Ref
-                </TableCell>
-                <TableCell>
-                  Customer
-                </TableCell>
+                <TableCell>Order Ref</TableCell>
+                <TableCell>Customer</TableCell>
                 <TableCell sortDirection="desc">
-                  <Tooltip
-                    enterDelay={300}
-                    title="Sort"
-                  >
-                    <TableSortLabel
-                      active
-                      direction="desc"
-                    >
+                  <Tooltip enterDelay={300} title="Sort">
+                    <TableSortLabel active direction="desc">
                       Date
                     </TableSortLabel>
                   </Tooltip>
                 </TableCell>
-                <TableCell>
-                  Status
-                </TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {orders.map((order) => (
-                <TableRow
-                  hover
-                  key={order.id}
-                >
-                  <TableCell>
-                    {order.ref}
-                  </TableCell>
-                  <TableCell>
-                    {order.customer.name}
-                  </TableCell>
+                <TableRow hover key={order.id}>
+                  <TableCell>{order.ref}</TableCell>
+                  <TableCell>{order.customer.name}</TableCell>
                   <TableCell>
                     {moment(order.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
-                    <Chip
-                      color="primary"
-                      label={order.status}
-                      size="small"
-                    />
+                    <Chip color="primary" label={order.status} size="small" />
                   </TableCell>
                 </TableRow>
               ))}
@@ -160,11 +134,7 @@ const LatestOrders = ({ className, ...rest }) => {
           </Table>
         </Box>
       </PerfectScrollbar>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        p={2}
-      >
+      <Box display="flex" justifyContent="flex-end" p={2}>
         <Button
           color="primary"
           endIcon={<ArrowRightIcon />}

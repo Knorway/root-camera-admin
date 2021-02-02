@@ -13,21 +13,6 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
-
 const useStyles = makeStyles(() => ({
   root: {}
 }));
@@ -77,7 +62,7 @@ const StockDetailOut = ({ stock }) => {
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="구매자"
@@ -88,7 +73,7 @@ const StockDetailOut = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="구매자 연락처"
@@ -99,7 +84,7 @@ const StockDetailOut = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="판매 출처"
@@ -110,7 +95,7 @@ const StockDetailOut = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="판매 날짜"
@@ -122,7 +107,7 @@ const StockDetailOut = ({ stock }) => {
               />
             </Grid>
             <Divider />
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
@@ -134,40 +119,7 @@ const StockDetailOut = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
-              <TextField
-                fullWidth
-                label="45%"
-                name="temp"
-                // onChange={handleChange}
-                required
-                defaultValue={stock.temp}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={3} xs={6}>
-              <TextField
-                fullWidth
-                label="35%"
-                name="temp"
-                // onChange={handleChange}
-                required
-                defaultValue={stock.temp}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={3} xs={6}>
-              <TextField
-                fullWidth
-                label="20%"
-                name="temp"
-                // onChange={handleChange}
-                required
-                defaultValue={stock.temp}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 label="기타 추가 비용"
@@ -178,16 +130,94 @@ const StockDetailOut = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                label="판매 사이트 체크박스"
+                name="temp"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.temp}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                label="판매방법 기타(승우문자)"
+                name="temp"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.temp}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 helperText="자동계산필드"
-                label="총 구매 비용"
-                name="totalPurchaseCosts"
+                label="45%"
+                name="temp"
                 // onChange={handleChange}
                 required
-                defaultValue={stock.totalPurchaseCosts}
+                defaultValue={stock.temp}
                 variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                helperText="자동계산필드"
+                label="35%"
+                name="temp"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.temp}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                helperText="자동계산필드"
+                label="20%"
+                name="temp"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.temp}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                helperText="자동계산필드"
+                label="순이익"
+                name="profit"
+                // onChange={handleChange}
+                required
+                defaultValue={stock.profit}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                id="filled-textarea"
+                label="판매 특징 상세"
+                placeholder="Placeholder"
+                multiline
+                // variant="filled"
+                fullWidth
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                id="filled-textarea"
+                label="메타데이터"
+                placeholder="Placeholder"
+                multiline
+                // variant="filled"
+                fullWidth
               />
             </Grid>
 
