@@ -23,8 +23,6 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const labelName = ['품번', '일련번호', '구매처', '싱품명'];
-
 const StockDetailIn = ({ stock }) => {
   const [state, setState] = useState({
     checkedA: true,

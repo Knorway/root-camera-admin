@@ -29,7 +29,7 @@ const StockDetailView = () => {
     dispatch(getStockById(id));
   }, []);
 
-  if (isEmpty(stock, [])) return null; // choose one
+  // if (isEmpty(stock, [])) return null;
   if (loading) return null;
 
   return (
@@ -43,7 +43,7 @@ const StockDetailView = () => {
             <StockDetailIn stock={stock} />
           </Grid>
           <Grid item lg={6} md={6} xs={12}>
-            <StockDetailOut />
+            <StockDetailOut stock={stock} />
           </Grid>
         </Grid>
       </Container>
