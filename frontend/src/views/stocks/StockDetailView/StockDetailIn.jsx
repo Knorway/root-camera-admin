@@ -33,6 +33,19 @@ const StockDetailIn = ({ stock }) => {
   };
 
   console.log(stock);
+  if (stock) {
+    console.log();
+  }
+
+  const toDatePickerFormat = (date, option = { new: false }) => {
+    if (option.new) {
+      return new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substring(0, 10);
+    }
+
+    return date?.toString().substring(0, 10);
+  };
 
   return (
     <form autoComplete="off" noValidate>
@@ -130,6 +143,7 @@ const StockDetailIn = ({ stock }) => {
             <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
+                helperText="수리/분실/대기"
                 label="상태"
                 name="currentlyAt"
                 // onChange={handleChange}
@@ -150,14 +164,35 @@ const StockDetailIn = ({ stock }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={6}>
+            {/* <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
+                type="datetime-local"
+                defaultValue={new Date(
+                  Date.now() - new Date().getTimezoneOffset() * 60000
+                )
+                  .toISOString()
+                  .substring(0, 16)}
                 label="입고 날짜"
                 name="stockedAt"
                 // onChange={handleChange}
                 required
-                defaultValue={stock.stockedAt}
+                // defaultValue={new Date().toISOString().substring(0, 10)}
+                variant="outlined"
+              />
+            </Grid> */}
+            <Grid item md={6} xs={6}>
+              <TextField
+                fullWidth
+                type="date"
+                label="입고 날짜"
+                name="stockedAt"
+                // onChange={handleChange}
+                required
+                defaultValue={
+                  toDatePickerFormat(stock.stockedAt) ||
+                  toDatePickerFormat(new Date(), { new: true })
+                }
                 variant="outlined"
               />
             </Grid>

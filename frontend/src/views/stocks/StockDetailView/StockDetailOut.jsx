@@ -35,6 +35,18 @@ const StockDetailOut = ({ stock }) => {
     });
   };
 
+  const toDatePickerFormat = (date, option = { new: false }) => {
+    if (option.new) {
+      return new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substring(0, 10);
+    }
+
+    return date?.toString().substring(0, 10);
+  };
+
+  console.log(stock.soldAt);
+
   return (
     <form autoComplete="off" noValidate>
       <Card>
@@ -98,11 +110,15 @@ const StockDetailOut = ({ stock }) => {
             <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
+                type="date"
                 label="판매 날짜"
                 name="soldAt"
                 // onChange={handleChange}
                 required
-                defaultValue={stock.soldAt}
+                defaultValue={
+                  toDatePickerFormat(stock.soldAt) ||
+                  toDatePickerFormat(new Date(), { new: true })
+                }
                 variant="outlined"
               />
             </Grid>

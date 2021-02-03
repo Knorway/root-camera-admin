@@ -38,6 +38,7 @@
     "react/prop-types": "off",
     "jsx-quotes": "off",
     "no-unused-expressions": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }

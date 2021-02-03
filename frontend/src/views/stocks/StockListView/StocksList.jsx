@@ -25,6 +25,7 @@ import getInitials from 'src/utils/getInitials';
 import { Link } from 'react-router-dom';
 import { getStocks, GET_STOCKS } from 'src/modules/stocks';
 import { useRequest } from 'src/utils/useRequest';
+import Loader from 'src/components/Loader';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -57,7 +58,8 @@ const StocksList = ({ className, customers, ...rest }) => {
     setPage(newPage);
   };
 
-  if (loading) return null;
+  // if (loading) return null;
+  if (loading) return <Loader />;
 
   return (
     <>
@@ -88,7 +90,12 @@ const StocksList = ({ className, customers, ...rest }) => {
               </TableHead>
               <TableBody className={classes.table}>
                 {stocks.map((stock) => (
-                  <TableRow key={stock._id}>
+                  <TableRow
+                    key={stock._id}
+                    style={{
+                      backgroundColor: stock.pin === 'D641' ? '#6EC492' : ''
+                    }}
+                  >
                     <TableCell>재고있음</TableCell>
                     <TableCell>
                       <Link to={`/app/stocks/${stock._id}`}>{stock.pin}</Link>
