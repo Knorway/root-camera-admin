@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
-import mongoDB from './config/db.js';
-import Stock from './model/stockModel.js';
-import { stocks } from './data/stocks.js';
+import mongoDB from '../config/db.js';
+import Stock from '../model/stockModel.js';
+import { importCsv } from './csv.js';
 
 dotenv.config();
 mongoDB();
 
-const importData = async () => {
+export const importData = async (stocks) => {
 	try {
 		await Stock.deleteMany();
 
@@ -20,7 +20,7 @@ const importData = async () => {
 	}
 };
 
-const destroyData = async () => {
+export const destroyData = async () => {
 	try {
 		await Stock.deleteMany();
 
@@ -35,5 +35,5 @@ const destroyData = async () => {
 if (process.argv[2] === '-d') {
 	destroyData();
 } else {
-	importData();
+	importCsv('../data_final.csv', importData);
 }

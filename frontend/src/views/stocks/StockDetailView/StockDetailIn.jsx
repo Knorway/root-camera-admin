@@ -33,9 +33,6 @@ const StockDetailIn = ({ stock }) => {
   };
 
   console.log(stock);
-  if (stock) {
-    console.log();
-  }
 
   const toDatePickerFormat = (date, option = { new: false }) => {
     if (option.new) {
@@ -283,6 +280,8 @@ const StockDetailIn = ({ stock }) => {
                 label="재고 특징 상세"
                 placeholder="Placeholder"
                 multiline
+                name="memo_inStock"
+                defaultValue={stock.memo_inStock}
                 // variant="filled"
                 fullWidth
               />
@@ -293,6 +292,8 @@ const StockDetailIn = ({ stock }) => {
                 label="메타데이터"
                 placeholder="Placeholder"
                 multiline
+                name="meta_inStock"
+                defaultValue={stock.meta_inStock}
                 // variant="filled"
                 fullWidth
               />

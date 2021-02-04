@@ -34,7 +34,7 @@ const TasksProgress = ({ className, ...rest }) => {
         <Grid container justify="space-between" spacing={3}>
           <Grid item>
             <Typography color="textSecondary" gutterBottom variant="h6">
-              재고 회전율
+              재고 평균 체류 기간
             </Typography>
             <Typography color="textPrimary" variant="h3">
               75.5%

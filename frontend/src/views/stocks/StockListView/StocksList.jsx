@@ -1,4 +1,3 @@
-/* eslint-disable dot-notation */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
@@ -58,6 +57,22 @@ const StocksList = ({ className, customers, ...rest }) => {
     setPage(newPage);
   };
 
+  const setStatusColor = (status) => {
+    if (status === '수리') {
+      return '#6ec492';
+    }
+
+    if (status === '분실') {
+      return '#fbedf0';
+    }
+
+    if (status === '입고대기') {
+      return '#fae195';
+    }
+
+    return '';
+  };
+
   // if (loading) return null;
   if (loading) return <Loader />;
 
@@ -69,18 +84,7 @@ const StocksList = ({ className, customers, ...rest }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  {/* <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedCustomerIds.length === customers.length}
-                        color="primary"
-                        indeterminate={
-                          selectedCustomerIds.length > 0 &&
-                          selectedCustomerIds.length < customers.length
-                        }
-                        onChange={handleSelectAll}
-                      />
-                    </TableCell> */}
-                  <TableCell>판매여부</TableCell>
+                  <TableCell>상태</TableCell>
                   <TableCell>품번</TableCell>
                   <TableCell>일련번호</TableCell>
                   <TableCell>제품명</TableCell>
@@ -93,10 +97,10 @@ const StocksList = ({ className, customers, ...rest }) => {
                   <TableRow
                     key={stock._id}
                     style={{
-                      backgroundColor: stock.pin === 'D641' ? '#6EC492' : ''
+                      backgroundColor: `${setStatusColor(stock.status)}`
                     }}
                   >
-                    <TableCell>재고있음</TableCell>
+                    <TableCell>{stock.status || '재고 있음'}</TableCell>
                     <TableCell>
                       <Link to={`/app/stocks/${stock._id}`}>{stock.pin}</Link>
                     </TableCell>
@@ -106,42 +110,6 @@ const StocksList = ({ className, customers, ...rest }) => {
                     <TableCell>{stock.stockedAt.substring(0, 10)}</TableCell>
                   </TableRow>
                 ))}
-
-                {/* {customers.slice(0, limit).map((customer) => (
-                <TableRow
-                  hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
-                      value="true"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box alignItems="center" display="flex">
-                      <Avatar className={classes.avatar}>
-                        <CheckBoxOutlineBlankIcon />
-                      </Avatar>
-                      <Typography color="textPrimary" variant="body1">
-                        <Link to={`/app/stocks/${customer.name}`}>
-                          {customer.name}
-                        </Link>
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>{customer.email}</TableCell>
-                  <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-                  </TableCell>
-                  <TableCell>{customer.phone}</TableCell>
-                  <TableCell>
-                    {moment(customer.createdAt).format('DD/MM/YYYY')}
-                  </TableCell>
-                </TableRow>
-              ))} */}
               </TableBody>
             </Table>
           </Box>

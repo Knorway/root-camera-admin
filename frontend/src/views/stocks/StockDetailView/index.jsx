@@ -33,12 +33,9 @@ const StockDetailView = () => {
   if (loading) return null;
 
   return (
-    <Page className={classes.root} title="재고 상세 임시">
+    <Page className={classes.root} title={`${stock.pin} | ${stock.name}`}>
       <Container maxWidth="lg">
         <Grid container spacing={3}>
-          {/* <Grid item lg={4} md={6} xs={12}>
-            <Profile />
-          </Grid> */}
           <Grid item xl={12}>
             <StockDetailIn stock={stock} />
           </Grid>

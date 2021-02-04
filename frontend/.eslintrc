@@ -39,6 +39,10 @@
     "jsx-quotes": "off",
     "no-unused-expressions": "off",
     "implicit-arrow-linebreak": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-wrap-multilines": "off",
+    "no-nested-ternary": "off",
+    "no-constant-condition": "off",
+    "indent": "off"
   }
 }

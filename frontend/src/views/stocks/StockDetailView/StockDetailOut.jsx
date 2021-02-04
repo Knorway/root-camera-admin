@@ -10,7 +10,13 @@ import {
   Divider,
   Grid,
   TextField,
-  makeStyles
+  makeStyles,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  FormHelperText
 } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
@@ -45,7 +51,7 @@ const StockDetailOut = ({ stock }) => {
     return date?.toString().substring(0, 10);
   };
 
-  console.log(stock.soldAt);
+  console.log(stock.stockedAt);
 
   return (
     <form autoComplete="off" noValidate>
@@ -147,20 +153,67 @@ const StockDetailOut = ({ stock }) => {
               />
             </Grid>
             <Grid item md={6} xs={6}>
-              <TextField
-                fullWidth
-                label="판매 사이트 체크박스"
-                name="temp"
-                // onChange={handleChange}
-                required
-                defaultValue={stock.temp}
-                variant="outlined"
-              />
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel component="legend">판매 루트</FormLabel>
+                <FormGroup row>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={gilad}
+                        onChange={handleChange}
+                        name="공홈"
+                      />
+                    }
+                    label="공홈"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={jason}
+                        onChange={handleChange}
+                        name="인스타"
+                      />
+                    }
+                    label="인스타"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={antoine}
+                        onChange={handleChange}
+                        name="중고나라"
+                      />
+                    }
+                    label="중고나라"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={antoine}
+                        onChange={handleChange}
+                        name="번개장터"
+                      />
+                    }
+                    label="번개장터"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={antoine}
+                        onChange={handleChange}
+                        name="등록기"
+                      />
+                    }
+                    label="등록기"
+                  />
+                </FormGroup>
+                {/* <FormHelperText>Be careful</FormHelperText> */}
+              </FormControl>
             </Grid>
             <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
-                label="판매방법 기타(승우문자)"
+                label="판매루트 기타(승우문자)"
                 name="temp"
                 // onChange={handleChange}
                 required
