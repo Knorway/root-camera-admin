@@ -158,9 +158,4 @@ const SalesList = ({ className, customers, ...rest }) => {
   );
 };
 
-SalesList.propTypes = {
-  className: PropTypes.string,
-  customers: PropTypes.array.isRequired
-};
-
 export default SalesList;

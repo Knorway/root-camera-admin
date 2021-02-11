@@ -43,6 +43,8 @@
     "react/jsx-wrap-multilines": "off",
     "no-nested-ternary": "off",
     "no-constant-condition": "off",
-    "indent": "off"
+    "indent": "off",
+    "prefer-const": "off",
+    "no-alert": "off"
   }
 }

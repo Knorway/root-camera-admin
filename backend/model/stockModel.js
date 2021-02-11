@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-// const offset = new Date().getTimezoneOffset() * 60000;
-// const today = new Date(Date.now() - offset);
+const offset = new Date().getTimezoneOffset() * 60000;
+const today = new Date(Date.now() - offset);
 
 const stockSchema = new mongoose.Schema({
 	inStock: {
@@ -10,7 +10,7 @@ const stockSchema = new mongoose.Schema({
 	},
 	status: {
 		type: String,
-		default: '재고있음',
+		default: '재고있음',
 	},
 	currentlyAt: {
 		type: String,
@@ -20,7 +20,6 @@ const stockSchema = new mongoose.Schema({
 	},
 	pin: {
 		type: String,
-		required: true,
 	},
 	serialNumber: {
 		type: String,
@@ -59,7 +58,7 @@ const stockSchema = new mongoose.Schema({
 	},
 	stockedAt: {
 		type: Date,
-		default: new Date(),
+		default: today,
 	},
 	brand: {
 		type: String,
@@ -75,12 +74,12 @@ const stockSchema = new mongoose.Schema({
 	},
 	soldAt: {
 		type: Date,
-		default: new Date(),
+		default: today,
 	},
 	buyer_name: {
 		type: String,
 	},
-	buyer_phoneNumer: {
+	buyer_phoneNumber: {
 		type: String,
 	},
 	profit_filter_a: {
@@ -94,20 +93,31 @@ const stockSchema = new mongoose.Schema({
 	},
 	soldFrom_site: {
 		type: Boolean,
+		default: false,
 	},
 	soldFrom_insta: {
 		type: Boolean,
+		default: false,
 	},
 	soldFrom_bungae: {
 		type: Boolean,
+		default: false,
 	},
 	soldFrom_jungna: {
 		type: Boolean,
+		default: false,
 	},
 	soldFrom_register: {
 		type: Boolean,
+		default: false,
 	},
 	soldFrom_method: {
+		type: String,
+	},
+	memo_sold: {
+		type: String,
+	},
+	meta_sold: {
 		type: String,
 	},
 });

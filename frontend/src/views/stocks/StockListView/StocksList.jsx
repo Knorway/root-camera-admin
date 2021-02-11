@@ -73,7 +73,6 @@ const StocksList = ({ className, customers, ...rest }) => {
     return '';
   };
 
-  // if (loading) return null;
   if (loading) return <Loader />;
 
   return (
@@ -116,7 +115,7 @@ const StocksList = ({ className, customers, ...rest }) => {
         </PerfectScrollbar>
         <TablePagination
           component="div"
-          count={customers.length}
+          // count={customers.length}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleLimitChange}
           page={page}
@@ -129,11 +128,6 @@ const StocksList = ({ className, customers, ...rest }) => {
       </Button>
     </>
   );
-};
-
-StocksList.propTypes = {
-  className: PropTypes.string,
-  customers: PropTypes.array.isRequired
 };
 
 export default StocksList;

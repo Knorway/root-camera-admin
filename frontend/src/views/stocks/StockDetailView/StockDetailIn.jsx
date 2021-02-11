@@ -12,36 +12,26 @@ import {
   makeStyles,
   Switch
 } from '@material-ui/core';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toDatePickerFormat } from 'src/utils/lib';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const StockDetailIn = ({ stock }) => {
-  const [state, setState] = useState({
-    checkedA: false,
-    checkedB: false
-  });
+const StockDetailIn = ({ stock, handleChange }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    const { name } = event.target;
-    setState((prev) => ({
-      ...prev,
-      [name]: !prev[name]
-    }));
-  };
-
-  console.log(stock);
-
-  const toDatePickerFormat = (date, option = { new: false }) => {
-    if (option.new) {
-      return new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substring(0, 10);
-    }
-
-    return date?.toString().substring(0, 10);
+  const onSave = () => {};
+  const onDelete = (id) => {
+    return async () => {
+      if (window.confirm('변화는 되돌릴 수 없습니다. 정말 삭제하시겠습니까?')) {
+        await axios.delete(`/api/stocks/${id}`);
+        navigate('/app/stocks');
+      }
+    };
   };
 
   return (
@@ -53,20 +43,7 @@ const StockDetailIn = ({ stock }) => {
           alignItems="center"
           className={classes.swtich}
         >
-          <CardHeader
-            md={6}
-            lg={6}
-            xl={6}
-            // subheader="The information can be edited"
-            title="재고 상세"
-          />
-          <Switch
-            checked={state.checkedB}
-            onChange={handleChange}
-            color="primary"
-            name="checkedB"
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-          />
+          <CardHeader md={6} lg={6} xl={6} title="재고 상세" />
         </Grid>
         <Divider />
         <CardContent>
@@ -76,9 +53,9 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 label="품번"
                 name="pin"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
-                value={stock.pin}
+                defaultValue={stock.pin}
                 variant="outlined"
               />
             </Grid>
@@ -87,7 +64,7 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 label="일련번호"
                 name="serialNumber"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.serialNumber}
                 variant="outlined"
@@ -98,7 +75,7 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 label="구매처"
                 name="purchasedFrom"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.purchasedFrom}
                 variant="outlined"
@@ -109,7 +86,7 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 label="상품명"
                 name="name"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.name}
                 variant="outlined"
@@ -120,7 +97,7 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 label="브랜드"
                 name="brand"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.brand}
                 variant="outlined"
@@ -131,7 +108,7 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 label="카테고리"
                 name="category"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.category}
                 variant="outlined"
@@ -142,10 +119,10 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 helperText="수리/분실/대기"
                 label="상태"
-                name="currentlyAt"
-                // onChange={handleChange}
+                name="status"
+                onChange={handleChange}
                 required
-                defaultValue={stock.currentlyAt}
+                defaultValue={stock.status}
                 variant="outlined"
               />
             </Grid>
@@ -155,36 +132,19 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 label="현재 위치"
                 name="currentlyAt"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.currentlyAt}
                 variant="outlined"
               />
             </Grid>
-            {/* <Grid item md={6} xs={6}>
-              <TextField
-                fullWidth
-                type="datetime-local"
-                defaultValue={new Date(
-                  Date.now() - new Date().getTimezoneOffset() * 60000
-                )
-                  .toISOString()
-                  .substring(0, 16)}
-                label="입고 날짜"
-                name="stockedAt"
-                // onChange={handleChange}
-                required
-                // defaultValue={new Date().toISOString().substring(0, 10)}
-                variant="outlined"
-              />
-            </Grid> */}
             <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
                 type="date"
                 label="입고 날짜"
                 name="stockedAt"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
                 defaultValue={
                   toDatePickerFormat(stock.stockedAt) ||
@@ -197,10 +157,10 @@ const StockDetailIn = ({ stock }) => {
               <TextField
                 fullWidth
                 label="해당없음"
-                name="currentlyAt"
-                // onChange={handleChange}
+                // name="currentlyAt"
+                onChange={handleChange}
                 required
-                defaultValue={stock.currentlyAt}
+                // defaultValue={stock.currentlyAt}
                 variant="outlined"
                 disabled
               />
@@ -212,9 +172,9 @@ const StockDetailIn = ({ stock }) => {
                 // helperText="Please specify the first name"
                 label="구매가격 $"
                 name="purchasedForUSD"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
-                value={stock.purchasedForUSD}
+                defaultValue={stock.purchasedForUSD}
                 variant="outlined"
               />
             </Grid>
@@ -223,7 +183,7 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 label="구매가격 ₩"
                 name="purchasedForKRW"
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.purchasedForKRW}
                 variant="outlined"
@@ -233,10 +193,10 @@ const StockDetailIn = ({ stock }) => {
               <TextField
                 fullWidth
                 label="배대지비용"
-                name="internationalShippingCosts"
-                // onChange={handleChange}
+                name="internationalShippingCost"
+                onChange={handleChange}
                 required
-                defaultValue={stock.internationalShippingCosts}
+                defaultValue={stock.internationalShippingCost}
                 variant="outlined"
               />
             </Grid>
@@ -244,10 +204,10 @@ const StockDetailIn = ({ stock }) => {
               <TextField
                 fullWidth
                 label="배송비"
-                name="shippingCosts"
-                // onChange={handleChange}
+                name="shippingCost"
+                onChange={handleChange}
                 required
-                defaultValue={stock.shippingCosts}
+                defaultValue={stock.shippingCost}
                 variant="outlined"
               />
             </Grid>
@@ -255,10 +215,10 @@ const StockDetailIn = ({ stock }) => {
               <TextField
                 fullWidth
                 label="기타 추가 비용"
-                name="optionalCosts"
-                // onChange={handleChange}
+                name="extraCost"
+                onChange={handleChange}
                 required
-                defaultValue={stock.optionalCosts}
+                defaultValue={stock.extraCost}
                 variant="outlined"
               />
             </Grid>
@@ -267,10 +227,10 @@ const StockDetailIn = ({ stock }) => {
                 fullWidth
                 helperText="자동계산필드"
                 label="총 구매 비용"
-                name="totalPurchaseCosts"
-                // onChange={handleChange}
+                name="totalPurchaseCost"
+                onChange={handleChange}
                 required
-                defaultValue={stock.totalPurchaseCosts}
+                defaultValue={stock.totalPurchaseCost}
                 variant="outlined"
               />
             </Grid>
@@ -282,19 +242,19 @@ const StockDetailIn = ({ stock }) => {
                 multiline
                 name="memo_inStock"
                 defaultValue={stock.memo_inStock}
-                // variant="filled"
+                onChange={handleChange}
                 fullWidth
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 id="filled-textarea"
-                label="메타데이터"
+                label="비고"
                 placeholder="Placeholder"
                 multiline
                 name="meta_inStock"
                 defaultValue={stock.meta_inStock}
-                // variant="filled"
+                onChange={handleChange}
                 fullWidth
               />
             </Grid>
@@ -322,8 +282,11 @@ const StockDetailIn = ({ stock }) => {
           </Grid>
         </CardContent>
         <Divider />
-        <Box display="flex" justifyContent="flex-end" p={2}>
-          <Button color="primary" variant="contained">
+        <Box display="flex" justifyContent="space-between" p={2}>
+          <Button variant="contained" onClick={onDelete(stock._id)}>
+            삭제
+          </Button>
+          <Button color="primary" variant="contained" onClick={onSave}>
             저장
           </Button>
         </Box>
@@ -336,4 +299,4 @@ const StockDetailIn = ({ stock }) => {
 //   className: PropTypes.string
 // };
 
-export default StockDetailIn;
+export default React.memo(StockDetailIn);

@@ -1,13 +1,12 @@
 import asyncHandler from 'express-async-handler';
-import mongoose from 'mongoose';
 import Stock from '../model/stockModel.js';
 
 export const getStocks = asyncHandler(async (req, res) => {
-	const stocks = await Stock.find({});
+	const stocks = await Stock.find({}).sort({ stockedAt: -1 });
 
 	if (!stocks) {
 		res.status(404);
-		throw new Error('Stock not found');
+		throw new Error('존재하지 않는 재고입니다');
 	}
 
 	res.status(200);
@@ -20,9 +19,43 @@ export const getStockById = asyncHandler(async (req, res) => {
 
 	if (!stock) {
 		res.status(404);
-		throw new Error('Stock not found');
+		throw new Error('존재하지 않는 재고입니다');
 	}
 
 	res.status(200);
 	res.json(stock);
+});
+
+export const createStock = asyncHandler(async (req, res) => {
+	const stock = await Stock.create({
+		pin: Date.now(),
+	});
+
+	if (!stock) {
+		res.status(404);
+		throw new Error('새 재고를 작성하는 데 실패했습니다');
+	}
+
+	res.status(200);
+	res.json(stock);
+});
+
+export const deleteStock = asyncHandler(async (req, res) => {
+	const { id } = req.params;
+
+	const stock = await Stock.findById(id);
+
+	if (!stock) {
+		res.status(404);
+		throw new Error('존재하지 않는 재고입니다');
+	} else {
+		stock.remove();
+		res.status(200);
+		res.json({ message: '성공적으로 삭제되었습니다' });
+	}
+});
+
+export const editStock = asyncHandler(async (req, res) => {
+	console.log('object');
+	res.end();
 });

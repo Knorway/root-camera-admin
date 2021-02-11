@@ -8,6 +8,7 @@ const filterStockedAt = (stock) => {
 			stockedAt: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
 		};
 	}
+
 	return {
 		...stock,
 		stockedAt: stock.stockedAt
@@ -25,6 +26,7 @@ const filterInStock = (stock) => {
 			inStock: true,
 		};
 	}
+
 	return {
 		...stock,
 		inStock: false,
@@ -38,9 +40,9 @@ const filterSoldFrom = (stock) => {
 		if (key.startsWith('soldFrom') && key !== 'soldFrom_method') {
 			if (!filtered[key]) {
 				return (filtered[key] = false);
-			} else {
-				return (filtered[key] = true);
 			}
+
+			return (filtered[key] = true);
 		}
 	});
 

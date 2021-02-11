@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -12,6 +13,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -24,7 +26,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Toolbar = ({ className, ...rest }) => {
+  const navigate = useNavigate();
   const classes = useStyles();
+
+  const addNewStock = async () => {
+    const response = await axios.post('/api/stocks');
+    navigate(`/app/stocks/${response.data._id}`, { replace: true });
+  };
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>
@@ -33,7 +41,7 @@ const Toolbar = ({ className, ...rest }) => {
           Import
         </Button> */}
         <Button className={classes.exportButton}>엑셀 파일로 추출</Button>
-        <Button color="primary" variant="contained">
+        <Button color="primary" variant="contained" onClick={addNewStock}>
           재고 추가하기
         </Button>
       </Box>

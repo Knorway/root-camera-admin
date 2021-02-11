@@ -1,12 +1,6 @@
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import React from 'react';
-import {
-  useRoutes,
-  Routes,
-  Route,
-  BrowserRouter,
-  Navigate
-} from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 import GlobalStyles from 'src/components/GlobalStyles';
 import 'src/mixins/chartjs';
@@ -14,7 +8,6 @@ import theme from 'src/theme';
 import DashboardView from 'src/views/dashboard/DashboardView';
 import StockListView from 'src/views/stocks/StockListView';
 import SettingsView from 'src/views/settings/SettingsView';
-import routes from 'src/routes';
 import DashboardLayout from './layouts/DashboardLayout';
 import StockDetailView from './views/stocks/StockDetailView';
 import SaleListView from './views/sales/SaleListView';
@@ -29,7 +22,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Routes>
-        <Route path="" element={<MainLayout />}>
+        <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<Navigate to="/app/dashboard" />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/404" element={<NotFoundView />} />
@@ -45,8 +38,6 @@ const App = () => {
           <Route path="*" element={<Navigate to="/404" />} />
         </Route>
       </Routes>
-
-      {/* {routesObject} */}
     </ThemeProvider>
   );
 };
