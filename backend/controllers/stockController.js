@@ -55,7 +55,21 @@ export const deleteStock = asyncHandler(async (req, res) => {
 	}
 });
 
-export const editStock = asyncHandler(async (req, res) => {
-	console.log('object');
-	res.end();
+export const editStocks = asyncHandler(async (req, res) => {
+	const stack = req.body;
+	console.log(stack);
+
+	const result = stack.map((stock) => {
+		return Stock.findByIdAndUpdate(stock._id, { ...stock }, { new: true });
+	});
+
+	if (!result) {
+		res.status(404);
+		throw new Error('재고를 수정하는 데 실패했습니다');
+	}
+
+	const editedStocks = await Promise.all(result);
+
+	res.status(200);
+	res.json({ message: editedStocks });
 });

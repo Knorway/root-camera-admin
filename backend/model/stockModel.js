@@ -63,7 +63,7 @@ const stockSchema = new mongoose.Schema({
 	brand: {
 		type: String,
 	},
-	caterory: {
+	category: {
 		type: String,
 	},
 	memo_inStock: {

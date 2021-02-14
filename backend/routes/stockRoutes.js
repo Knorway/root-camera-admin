@@ -2,14 +2,14 @@ import express from 'express';
 import {
 	createStock,
 	deleteStock,
-	editStock,
+	editStocks,
 	getStockById,
 	getStocks,
 } from '../controllers/stockController.js';
 
 const router = express.Router();
 
-router.route('/').get(getStocks).post(createStock);
-router.route('/:id').get(getStockById).put(editStock).delete(deleteStock);
+router.route('/').get(getStocks).post(createStock).put(editStocks);
+router.route('/:id').get(getStockById).delete(deleteStock);
 
 export default router;

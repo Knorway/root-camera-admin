@@ -4,13 +4,13 @@ import Thunk from 'redux-thunk';
 import request from './request';
 import stocks from './stocks';
 import stock from './stock';
-import stockForm from './stockForm';
+import editedStocks from './editedStocks';
 
 const rootReducer = combineReducers({
   request,
   stocks,
   stock,
-  stockForm
+  editedStocks
 });
 
 const store = createStore(

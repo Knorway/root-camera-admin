@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import {
   Box,
@@ -19,16 +19,17 @@ import {
   Switch,
   Collapse
 } from '@material-ui/core';
-import { toDatePickerFormat } from '../utils';
+import { toDatePickerFormat } from 'src/utils/lib';
+import useEditedStocks from 'src/utils/useEditedStocks';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const StockDetailOut = ({ stock, handleChange, isInStock }) => {
-  const [toggleInStock, setToggleInStock] = useState(stock.inStock);
-
+const StockDetailOut = () => {
   const classes = useStyles();
+  const { stock, onChange, onSave } = useEditedStocks();
+  const [toggleInStock, setToggleInStock] = useState(stock.inStock);
 
   return (
     <form autoComplete="off" noValidate>
@@ -47,9 +48,9 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
             title="판매 상세"
           />
           <Switch
-            defaultChecked={!stock.inStock}
+            checked={toggleInStock}
             onChange={(e) => {
-              handleChange(e);
+              onChange(e);
               setToggleInStock((prev) => !prev);
             }}
             color="primary"
@@ -66,9 +67,9 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   fullWidth
                   label="구매자"
                   name="buyer_name"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
-                  value={stock.buyer_name}
+                  defaultValue={stock.buyer_name}
                   variant="outlined"
                 />
               </Grid>
@@ -77,7 +78,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   fullWidth
                   label="구매자 연락처"
                   name="buyer_phoneNumber"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
                   defaultValue={stock.buyer_phoneNumber}
                   variant="outlined"
@@ -89,7 +90,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   type="date"
                   label="판매 날짜"
                   name="soldAt"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
                   defaultValue={
                     toDatePickerFormat(stock.soldAt) ||
@@ -110,7 +111,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_site}
-                          onChange={handleChange}
+                          onChange={onChange}
                           name="soldFrom_site"
                         />
                       }
@@ -120,7 +121,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_insta}
-                          onChange={handleChange}
+                          onChange={onChange}
                           name="soldFrom_insta"
                         />
                       }
@@ -130,7 +131,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_jungna}
-                          onChange={handleChange}
+                          onChange={onChange}
                           name="soldFrom_jungna"
                         />
                       }
@@ -140,7 +141,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_bungae}
-                          onChange={handleChange}
+                          onChange={onChange}
                           name="soldFrom_bungae"
                         />
                       }
@@ -150,7 +151,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_register}
-                          onChange={handleChange}
+                          onChange={onChange}
                           name="soldFrom_register"
                         />
                       }
@@ -165,9 +166,9 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   fullWidth
                   label="판매 루트 상세"
                   name="soldFrom_method"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
-                  defaultValue={stock.soldFrom_site}
+                  defaultValue={stock.soldFrom_method}
                   variant="outlined"
                 />
               </Grid>
@@ -177,9 +178,9 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   // helperText="Please specify the first name"
                   label="판매가격"
                   name="soldFor"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
-                  value={stock.soldFor}
+                  defaultValue={stock.soldFor}
                   variant="outlined"
                 />
               </Grid>
@@ -190,7 +191,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   helperText="자동계산필드"
                   label="45%"
                   name="temp"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
                   defaultValue={stock.temp}
                   variant="outlined"
@@ -202,7 +203,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   helperText="자동계산필드"
                   label="35%"
                   name="temp"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
                   defaultValue={stock.temp}
                   variant="outlined"
@@ -214,7 +215,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   helperText="자동계산필드"
                   label="20%"
                   name="temp"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
                   defaultValue={stock.temp}
                   variant="outlined"
@@ -226,7 +227,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   helperText="자동계산필드"
                   label="순이익"
                   name="profit"
-                  onChange={handleChange}
+                  onChange={onChange}
                   required
                   defaultValue={stock.profit}
                   variant="outlined"
@@ -238,7 +239,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   label="판매 특징 상세"
                   placeholder="Placeholder"
                   name="memo_sold"
-                  onChange={handleChange}
+                  onChange={onChange}
                   defaultValue={stock.memo_sold}
                   multiline
                   // variant="filled"
@@ -251,7 +252,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
                   label="비고"
                   placeholder="Placeholder"
                   name="meta_sold"
-                  onChange={handleChange}
+                  onChange={onChange}
                   defaultValue={stock.meta_sold}
                   multiline
                   // variant="filled"
@@ -283,7 +284,7 @@ const StockDetailOut = ({ stock, handleChange, isInStock }) => {
           </CardContent>
           <Divider />
           <Box display="flex" justifyContent="flex-end" p={2}>
-            <Button color="primary" variant="contained">
+            <Button color="primary" variant="contained" onClick={onSave}>
               저장
             </Button>
           </Box>

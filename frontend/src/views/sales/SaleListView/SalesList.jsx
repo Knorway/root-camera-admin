@@ -17,7 +17,6 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import getInitials from 'src/utils/getInitials';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -124,7 +123,7 @@ const SalesList = ({ className, customers, ...rest }) => {
                         className={classes.avatar}
                         src={customer.avatarUrl}
                       >
-                        {getInitials(customer.name)}
+                        {/* {getInitials(customer.name)} */}
                       </Avatar>
                       <Typography color="textPrimary" variant="body1">
                         {customer.name}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import {
   Box,
@@ -9,30 +9,18 @@ import {
   Divider,
   Grid,
   TextField,
-  makeStyles,
-  Switch
+  makeStyles
 } from '@material-ui/core';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { toDatePickerFormat } from 'src/utils/lib';
+import useEditedStocks from 'src/utils/useEditedStocks';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const StockDetailIn = ({ stock, handleChange }) => {
+const StockDetailIn = () => {
   const classes = useStyles();
-  const navigate = useNavigate();
-
-  const onSave = () => {};
-  const onDelete = (id) => {
-    return async () => {
-      if (window.confirm('변화는 되돌릴 수 없습니다. 정말 삭제하시겠습니까?')) {
-        await axios.delete(`/api/stocks/${id}`);
-        navigate('/app/stocks');
-      }
-    };
-  };
+  const { stock, onChange, onSave, onDelete } = useEditedStocks();
 
   return (
     <form autoComplete="off" noValidate>
@@ -53,7 +41,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="품번"
                 name="pin"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.pin}
                 variant="outlined"
@@ -64,7 +52,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="일련번호"
                 name="serialNumber"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.serialNumber}
                 variant="outlined"
@@ -75,7 +63,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="구매처"
                 name="purchasedFrom"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.purchasedFrom}
                 variant="outlined"
@@ -86,7 +74,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="상품명"
                 name="name"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.name}
                 variant="outlined"
@@ -97,7 +85,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="브랜드"
                 name="brand"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.brand}
                 variant="outlined"
@@ -108,7 +96,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="카테고리"
                 name="category"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.category}
                 variant="outlined"
@@ -120,7 +108,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 helperText="수리/분실/대기"
                 label="상태"
                 name="status"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.status}
                 variant="outlined"
@@ -132,7 +120,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="현재 위치"
                 name="currentlyAt"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.currentlyAt}
                 variant="outlined"
@@ -144,11 +132,13 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 type="date"
                 label="입고 날짜"
                 name="stockedAt"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={
                   toDatePickerFormat(stock.stockedAt) ||
-                  toDatePickerFormat(new Date(), { new: true })
+                  toDatePickerFormat(new Date(), {
+                    new: true
+                  })
                 }
                 variant="outlined"
               />
@@ -158,7 +148,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="해당없음"
                 // name="currentlyAt"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 // defaultValue={stock.currentlyAt}
                 variant="outlined"
@@ -172,7 +162,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 // helperText="Please specify the first name"
                 label="구매가격 $"
                 name="purchasedForUSD"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.purchasedForUSD}
                 variant="outlined"
@@ -183,7 +173,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="구매가격 ₩"
                 name="purchasedForKRW"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.purchasedForKRW}
                 variant="outlined"
@@ -194,7 +184,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="배대지비용"
                 name="internationalShippingCost"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.internationalShippingCost}
                 variant="outlined"
@@ -205,7 +195,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="배송비"
                 name="shippingCost"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.shippingCost}
                 variant="outlined"
@@ -216,7 +206,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="기타 추가 비용"
                 name="extraCost"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.extraCost}
                 variant="outlined"
@@ -228,7 +218,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 helperText="자동계산필드"
                 label="총 구매 비용"
                 name="totalPurchaseCost"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 defaultValue={stock.totalPurchaseCost}
                 variant="outlined"
@@ -242,7 +232,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 multiline
                 name="memo_inStock"
                 defaultValue={stock.memo_inStock}
-                onChange={handleChange}
+                onChange={onChange}
                 fullWidth
               />
             </Grid>
@@ -254,7 +244,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 multiline
                 name="meta_inStock"
                 defaultValue={stock.meta_inStock}
-                onChange={handleChange}
+                onChange={onChange}
                 fullWidth
               />
             </Grid>
@@ -265,7 +255,7 @@ const StockDetailIn = ({ stock, handleChange }) => {
                 fullWidth
                 label="Select State"
                 name="state"
-                onChange={handleChange}
+                onChange={onChange}
                 required
                 select
                 SelectProps={{ native: true }}
@@ -294,9 +284,5 @@ const StockDetailIn = ({ stock, handleChange }) => {
     </form>
   );
 };
-
-// StockDetailIn.propTypes = {
-//   className: PropTypes.string
-// };
 
 export default React.memo(StockDetailIn);
