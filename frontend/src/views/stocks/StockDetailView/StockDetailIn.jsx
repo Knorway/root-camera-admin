@@ -105,7 +105,7 @@ const StockDetailIn = () => {
             <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
-                helperText="수리/분실/대기"
+                helperText="입고대기/수리/분실/재고있음"
                 label="상태"
                 name="status"
                 onChange={onChange}

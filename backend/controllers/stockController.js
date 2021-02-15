@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Stock from '../model/stockModel.js';
+import * as utils from './utils/lib.js';
 
 export const getStocks = asyncHandler(async (req, res) => {
 	const stocks = await Stock.find({}).sort({ stockedAt: -1 });
@@ -36,7 +37,7 @@ export const createStock = asyncHandler(async (req, res) => {
 		throw new Error('새 재고를 작성하는 데 실패했습니다');
 	}
 
-	res.status(200);
+	res.status(201);
 	res.json(stock);
 });
 
@@ -57,10 +58,19 @@ export const deleteStock = asyncHandler(async (req, res) => {
 
 export const editStocks = asyncHandler(async (req, res) => {
 	const stack = req.body;
-	console.log(stack);
 
 	const result = stack.map((stock) => {
-		return Stock.findByIdAndUpdate(stock._id, { ...stock }, { new: true });
+		return Stock.findByIdAndUpdate(
+			stock._id,
+			{
+				...stock,
+				status: stock.status || '입고대기',
+				stockedAt: utils.isToday(stock) ? utils.formatToday() : stock.stockedAt,
+				soldAt: utils.isToday(stock) ? utils.formatToday() : stock.soldAt,
+				pin: !stock.pin ? Date.now() : stock.pin,
+			},
+			{ new: true }
+		);
 	});
 
 	if (!result) {

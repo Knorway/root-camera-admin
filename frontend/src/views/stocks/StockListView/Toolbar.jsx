@@ -14,6 +14,8 @@ import {
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { stackNewStocks } from 'src/modules/stocks';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -26,12 +28,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Toolbar = ({ className, ...rest }) => {
-  const navigate = useNavigate();
   const classes = useStyles();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const addNewStock = async () => {
-    const response = await axios.post('/api/stocks');
-    navigate(`/app/stocks/${response.data._id}`, { replace: true });
+  const onClick = async () => {
+    try {
+      const { data } = await axios.post('/api/stocks');
+      dispatch(stackNewStocks(data));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -40,9 +47,16 @@ const Toolbar = ({ className, ...rest }) => {
         {/* <Button className={classes.importButton}>
           Import
         </Button> */}
-        <Button className={classes.exportButton}>엑셀 파일로 추출</Button>
-        <Button color="primary" variant="contained" onClick={addNewStock}>
-          재고 추가하기
+        {/* <Button className={classes.exportButton}>엑셀 파일로 추출</Button> */}
+        <Button
+          color="primary"
+          variant="contained"
+          className={classes.exportButton}
+        >
+          저장
+        </Button>
+        <Button color="primary" variant="contained" onClick={onClick}>
+          재고 추가
         </Button>
       </Box>
       <Box mt={3}>

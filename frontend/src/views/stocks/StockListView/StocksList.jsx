@@ -36,7 +36,7 @@ const StocksList = ({ className, customers, ...rest }) => {
   const [page, setPage] = useState(0);
 
   const dispatch = useDispatch();
-  const { loading, data: stocks, error } = useRequest(GET_STOCKS, 'stocks');
+  const { loading, data: stocks } = useRequest(GET_STOCKS, 'stocks');
 
   useEffect(() => {
     dispatch(getStocks());
@@ -88,9 +88,6 @@ const StocksList = ({ className, customers, ...rest }) => {
           </Box>
         </PerfectScrollbar>
       </Card>
-      <Button color="primary" variant="contained">
-        저장
-      </Button>
     </>
   );
 };

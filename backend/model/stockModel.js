@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-
-const offset = new Date().getTimezoneOffset() * 60000;
-const today = new Date(Date.now() - offset);
+import { today } from '../controllers/utils/lib.js';
 
 const stockSchema = new mongoose.Schema({
 	inStock: {
@@ -10,7 +8,7 @@ const stockSchema = new mongoose.Schema({
 	},
 	status: {
 		type: String,
-		default: '재고있음',
+		default: '입고대기',
 	},
 	currentlyAt: {
 		type: String,

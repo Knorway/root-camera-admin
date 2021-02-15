@@ -9,6 +9,17 @@ const useEditedStocks = () => {
   const dispatch = useDispatch();
   const { data: stock } = useSelector((state) => state.stock);
 
+  const initializeNewStack = useCallback(() => {
+    dispatch(
+      stackEditedStocks({
+        stockId: stock._id,
+        editedStock: {
+          ...stock
+        }
+      })
+    );
+  }, []);
+
   const onChange = useCallback((e) => {
     const { name, value, checked } = e.target;
     dispatch(
@@ -29,17 +40,6 @@ const useEditedStocks = () => {
     });
   };
 
-  const onInitialStack = useCallback(() => {
-    dispatch(
-      stackEditedStocks({
-        stockId: stock._id,
-        editedStock: {
-          ...stock
-        }
-      })
-    );
-  }, []);
-
   const onDelete = (id) => {
     return async () => {
       if (window.confirm('변화는 되돌릴 수 없습니다. 정말 삭제하시겠습니까?')) {
@@ -50,7 +50,7 @@ const useEditedStocks = () => {
   };
 
   useEffect(() => {
-    onInitialStack();
+    initializeNewStack();
   }, []);
 
   return { stock, onChange, onSave, onDelete };

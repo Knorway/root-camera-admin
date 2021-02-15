@@ -25,4 +25,12 @@ const getInitials = (name = '') => {
     .join('');
 };
 
-export { isEmpty, getInitials, toDatePickerFormat };
+const setStatusColor = (status) => {
+  if (status === '수리') return '#6ec492';
+  if (status === '분실') return '#fbedf0';
+  if (status === '입고대기') return '#fae195';
+
+  return '';
+};
+
+export { isEmpty, getInitials, toDatePickerFormat, setStatusColor };

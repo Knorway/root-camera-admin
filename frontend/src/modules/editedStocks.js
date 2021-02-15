@@ -9,7 +9,7 @@ export const stackEditedStocks = createAction(
 export const clearStack = createAction('editedStocks/CEARL_ONE');
 export const clearStackAll = createAction('editedStocks/CLEAR_ALL');
 
-const initialState = { stack: [] };
+const initialState = { stack: [], isSaved: true };
 
 const reducer = handleActions(
   {

@@ -49,12 +49,24 @@ const filterSoldFrom = (stock) => {
 	return filtered;
 };
 
+const filterStatus = (stock) => {
+	if (stock.inStock && !stock.status) {
+		return {
+			...stock,
+			status: '재고있음',
+		};
+	}
+
+	return stock;
+};
+
 const filter = (stock) => {
 	let filtered;
 
 	filtered = filterStockedAt(stock);
 	filtered = filterInStock(filtered);
 	filtered = filterSoldFrom(filtered);
+	filtered = filterStatus(filtered);
 
 	return filtered;
 };
