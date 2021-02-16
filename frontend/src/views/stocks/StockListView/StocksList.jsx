@@ -38,10 +38,6 @@ const StocksList = ({ className, customers, ...rest }) => {
   const dispatch = useDispatch();
   const { loading, data: stocks } = useRequest(GET_STOCKS, 'stocks');
 
-  useEffect(() => {
-    dispatch(getStocks());
-  }, []);
-
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
@@ -49,6 +45,10 @@ const StocksList = ({ className, customers, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
+
+  useEffect(() => {
+    dispatch(getStocks());
+  }, []);
 
   if (loading) return <Loader />;
 

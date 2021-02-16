@@ -59,7 +59,7 @@ export const deleteStock = asyncHandler(async (req, res) => {
 export const editStocks = asyncHandler(async (req, res) => {
 	const stack = req.body;
 
-	const result = stack.map((stock) => {
+	const result = Object.values(stack).map((stock) => {
 		return Stock.findByIdAndUpdate(
 			stock._id,
 			{

@@ -16,6 +16,7 @@ import { Search as SearchIcon } from 'react-feather';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { stackNewStocks } from 'src/modules/stocks';
+import useEditedStocks from 'src/utils/useEditedStocks';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -29,8 +30,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Toolbar = ({ className, ...rest }) => {
   const classes = useStyles();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { onSave } = useEditedStocks();
 
   const onClick = async () => {
     try {
@@ -38,6 +40,13 @@ const Toolbar = ({ className, ...rest }) => {
       dispatch(stackNewStocks(data));
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleSave = () => {
+    if (window.confirm('변경사항들이 일괄 변경됩니다. 저장하시겠습니까?')) {
+      onSave();
+      window.location.reload();
     }
   };
 
@@ -52,6 +61,7 @@ const Toolbar = ({ className, ...rest }) => {
           color="primary"
           variant="contained"
           className={classes.exportButton}
+          onClick={handleSave}
         >
           저장
         </Button>

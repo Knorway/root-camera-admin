@@ -9,19 +9,20 @@ export const stackEditedStocks = createAction(
 export const clearStack = createAction('editedStocks/CEARL_ONE');
 export const clearStackAll = createAction('editedStocks/CLEAR_ALL');
 
-const initialState = { stack: [], isSaved: true };
+const initialState = { stack: {}, isSaved: true };
 
 const reducer = handleActions(
   {
     [createEditedStock]: (state, action) => {},
     [stackEditedStocks]: (state, { payload: editedStock, meta: stockId }) => ({
       ...state,
-      stack: [
-        {
-          ...state.stack.find((e) => e._id === stockId),
+      stack: {
+        ...state.stack,
+        [stockId]: {
+          ...state.stack[stockId],
           ...editedStock
         }
-      ]
+      }
     }),
     [clearStack]: (state, action) => {},
     [clearStackAll]: (state, action) => {}

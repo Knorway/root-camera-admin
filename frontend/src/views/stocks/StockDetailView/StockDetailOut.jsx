@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import {
   Box,
@@ -31,6 +31,15 @@ const StockDetailOut = () => {
   const { stock, onChange, onSave } = useEditedStocks();
   const [toggleInStock, setToggleInStock] = useState(stock.inStock);
 
+  const onToggle = (e) => {
+    onChange(e, stock._id);
+    setToggleInStock((prev) => !prev);
+  };
+
+  const handleChange = (e) => {
+    onChange(e, stock._id);
+  };
+
   return (
     <form autoComplete="off" noValidate>
       <Card>
@@ -49,10 +58,7 @@ const StockDetailOut = () => {
           />
           <Switch
             checked={toggleInStock}
-            onChange={(e) => {
-              onChange(e);
-              setToggleInStock((prev) => !prev);
-            }}
+            onChange={onToggle}
             color="primary"
             name="inStock"
             inputProps={{ 'aria-label': 'primary checkbox' }}
@@ -67,7 +73,7 @@ const StockDetailOut = () => {
                   fullWidth
                   label="구매자"
                   name="buyer_name"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={stock.buyer_name}
                   variant="outlined"
@@ -78,7 +84,7 @@ const StockDetailOut = () => {
                   fullWidth
                   label="구매자 연락처"
                   name="buyer_phoneNumber"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={stock.buyer_phoneNumber}
                   variant="outlined"
@@ -90,7 +96,7 @@ const StockDetailOut = () => {
                   type="date"
                   label="판매 날짜"
                   name="soldAt"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={
                     toDatePickerFormat(stock.soldAt) ||
@@ -111,7 +117,7 @@ const StockDetailOut = () => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_site}
-                          onChange={onChange}
+                          onChange={handleChange}
                           name="soldFrom_site"
                         />
                       }
@@ -121,7 +127,7 @@ const StockDetailOut = () => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_insta}
-                          onChange={onChange}
+                          onChange={handleChange}
                           name="soldFrom_insta"
                         />
                       }
@@ -131,7 +137,7 @@ const StockDetailOut = () => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_jungna}
-                          onChange={onChange}
+                          onChange={handleChange}
                           name="soldFrom_jungna"
                         />
                       }
@@ -141,7 +147,7 @@ const StockDetailOut = () => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_bungae}
-                          onChange={onChange}
+                          onChange={handleChange}
                           name="soldFrom_bungae"
                         />
                       }
@@ -151,7 +157,7 @@ const StockDetailOut = () => {
                       control={
                         <Checkbox
                           defaultChecked={stock.soldFrom_register}
-                          onChange={onChange}
+                          onChange={handleChange}
                           name="soldFrom_register"
                         />
                       }
@@ -166,7 +172,7 @@ const StockDetailOut = () => {
                   fullWidth
                   label="판매 루트 상세"
                   name="soldFrom_method"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={stock.soldFrom_method}
                   variant="outlined"
@@ -178,7 +184,7 @@ const StockDetailOut = () => {
                   // helperText="Please specify the first name"
                   label="판매가격"
                   name="soldFor"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={stock.soldFor}
                   variant="outlined"
@@ -191,7 +197,7 @@ const StockDetailOut = () => {
                   helperText="자동계산필드"
                   label="45%"
                   name="temp"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={stock.temp}
                   variant="outlined"
@@ -203,7 +209,7 @@ const StockDetailOut = () => {
                   helperText="자동계산필드"
                   label="35%"
                   name="temp"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={stock.temp}
                   variant="outlined"
@@ -215,7 +221,7 @@ const StockDetailOut = () => {
                   helperText="자동계산필드"
                   label="20%"
                   name="temp"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={stock.temp}
                   variant="outlined"
@@ -227,7 +233,7 @@ const StockDetailOut = () => {
                   helperText="자동계산필드"
                   label="순이익"
                   name="profit"
-                  onChange={onChange}
+                  onChange={handleChange}
                   required
                   defaultValue={stock.profit}
                   variant="outlined"
@@ -239,7 +245,7 @@ const StockDetailOut = () => {
                   label="판매 특징 상세"
                   placeholder="Placeholder"
                   name="memo_sold"
-                  onChange={onChange}
+                  onChange={handleChange}
                   defaultValue={stock.memo_sold}
                   multiline
                   // variant="filled"
@@ -252,7 +258,7 @@ const StockDetailOut = () => {
                   label="비고"
                   placeholder="Placeholder"
                   name="meta_sold"
-                  onChange={onChange}
+                  onChange={handleChange}
                   defaultValue={stock.meta_sold}
                   multiline
                   // variant="filled"

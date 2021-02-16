@@ -3,13 +3,14 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { stackEditedStocks } from 'src/modules/editedStocks';
+import { his } from 'history';
 
 const useEditedStocks = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data: stock } = useSelector((state) => state.stock);
 
-  const initializeNewStack = useCallback(() => {
+  const initializeNewStack = useCallback((stock) => {
     dispatch(
       stackEditedStocks({
         stockId: stock._id,
@@ -20,11 +21,11 @@ const useEditedStocks = () => {
     );
   }, []);
 
-  const onChange = useCallback((e) => {
-    const { name, value, checked } = e.target;
+  const onChange = useCallback((event, stockId) => {
+    const { name, value, checked } = event.target;
     dispatch(
       stackEditedStocks({
-        stockId: stock._id,
+        stockId,
         editedStock: {
           [name]: value || checked
         }
@@ -49,11 +50,7 @@ const useEditedStocks = () => {
     };
   };
 
-  useEffect(() => {
-    initializeNewStack();
-  }, []);
-
-  return { stock, onChange, onSave, onDelete };
+  return { stock, onChange, onSave, onDelete, initializeNewStack };
 };
 
 export default useEditedStocks;

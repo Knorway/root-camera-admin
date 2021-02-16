@@ -11,10 +11,22 @@ import {
 import { Link } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { setStatusColor } from 'src/utils/lib';
+import { setStatusColor, toDatePickerFormat } from 'src/utils/lib';
+import useEditedStocks from 'src/utils/useEditedStocks';
 
 const StockListItem = ({ stock }) => {
   const [open, setOpen] = useState(false);
+
+  const { onChange, initializeNewStack } = useEditedStocks();
+
+  const handleChange = (e) => {
+    onChange(e, stock._id);
+  };
+
+  const handleOpen = () => {
+    initializeNewStack(stock);
+    setOpen((prev) => !prev);
+  };
 
   return (
     <>
@@ -25,11 +37,7 @@ const StockListItem = ({ stock }) => {
         }}
       >
         <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
+          <IconButton aria-label="expand row" size="small" onClick={handleOpen}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
@@ -40,7 +48,7 @@ const StockListItem = ({ stock }) => {
         <TableCell>{stock.serialNumber}</TableCell>
         <TableCell>{stock.name}</TableCell>
         <TableCell>{`${stock.purchasedForKRW}원`}</TableCell>
-        <TableCell>{stock.stockedAt.substring(0, 10)}</TableCell>
+        <TableCell>{stock.stockedAt?.substring(0, 10)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
@@ -56,7 +64,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="품번"
                     name="pin"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.pin}
                     variant="outlined"
@@ -73,7 +81,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="일련번호"
                     name="serialNumber"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.serialNumber}
                     variant="outlined"
@@ -90,7 +98,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="구매처"
                     name="purchasedFrom"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.purchasedFrom}
                     variant="outlined"
@@ -107,7 +115,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="상품명"
                     name="name"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.name}
                     variant="outlined"
@@ -124,7 +132,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="브랜드"
                     name="brand"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.brand}
                     variant="outlined"
@@ -141,7 +149,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="카테고리"
                     name="category"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.category}
                     variant="outlined"
@@ -159,7 +167,7 @@ const StockListItem = ({ stock }) => {
                     // helperText="입고대기/수리/분실/재고있음"
                     label="상태"
                     name="status"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.status}
                     variant="outlined"
@@ -177,7 +185,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="현재 위치"
                     name="currentlyAt"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.currentlyAt}
                     variant="outlined"
@@ -195,14 +203,14 @@ const StockListItem = ({ stock }) => {
                     type="date"
                     label="입고 날짜"
                     name="stockedAt"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
-                    // defaultValue={
-                    //   toDatePickerFormat(stock.stockedAt) ||
-                    //   toDatePickerFormat(new Date(), {
-                    //     new: true
-                    //   })
-                    // }
+                    defaultValue={
+                      toDatePickerFormat(stock.stockedAt) ||
+                      toDatePickerFormat(new Date(), {
+                        new: true
+                      })
+                    }
                     variant="outlined"
                     inputProps={{
                       style: { fontSize: 14, padding: 12 }
@@ -217,7 +225,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="해당없음"
                     // name="currentlyAt"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     // defaultValue={stock.currentlyAt}
                     variant="outlined"
@@ -236,7 +244,7 @@ const StockListItem = ({ stock }) => {
                     // helperText="Please specify the first name"
                     label="구매가격 $"
                     name="purchasedForUSD"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.purchasedForUSD}
                     variant="outlined"
@@ -253,7 +261,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="구매가격 ₩"
                     name="purchasedForKRW"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.purchasedForKRW}
                     variant="outlined"
@@ -270,7 +278,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="배대지비용"
                     name="internationalShippingCost"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.internationalShippingCost}
                     variant="outlined"
@@ -287,7 +295,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="배송비"
                     name="shippingCost"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.shippingCost}
                     variant="outlined"
@@ -304,7 +312,7 @@ const StockListItem = ({ stock }) => {
                     fullWidth
                     label="기타 추가 비용"
                     name="extraCost"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.extraCost}
                     variant="outlined"
@@ -322,7 +330,7 @@ const StockListItem = ({ stock }) => {
                     // helperText="자동계산필드"
                     label="총 구매 비용"
                     name="totalPurchaseCost"
-                    // onChange={onChange}
+                    onChange={handleChange}
                     required
                     defaultValue={stock.totalPurchaseCost}
                     variant="outlined"
@@ -334,15 +342,14 @@ const StockListItem = ({ stock }) => {
                     }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2} style={{ paddingBottom: -10 }}>
+                <Grid item md={2} xs={2}>
                   <TextField
                     id="filled-textarea"
                     label="재고 특징 상세"
-                    placeholder="Placeholder"
                     multiline
                     name="memo_inStock"
                     defaultValue={stock.memo_inStock}
-                    // onChange={onChange}
+                    onChange={handleChange}
                     fullWidth
                     InputProps={{
                       style: { fontSize: 14, paddingTop: 0 }
@@ -356,11 +363,10 @@ const StockListItem = ({ stock }) => {
                   <TextField
                     id="filled-textarea"
                     label="비고"
-                    placeholder="Placeholder"
                     multiline
                     name="meta_inStock"
                     defaultValue={stock.meta_inStock}
-                    // onChange={onChange}
+                    onChange={handleChange}
                     fullWidth
                     InputProps={{
                       style: { fontSize: 14, paddingTop: 0 }

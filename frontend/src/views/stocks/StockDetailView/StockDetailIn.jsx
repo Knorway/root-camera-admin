@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import {
   Box,
@@ -22,6 +22,10 @@ const StockDetailIn = () => {
   const classes = useStyles();
   const { stock, onChange, onSave, onDelete } = useEditedStocks();
 
+  const handleChange = (e) => {
+    onChange(e, stock._id);
+  };
+
   return (
     <form autoComplete="off" noValidate>
       <Card>
@@ -41,7 +45,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="품번"
                 name="pin"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.pin}
                 variant="outlined"
@@ -52,7 +56,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="일련번호"
                 name="serialNumber"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.serialNumber}
                 variant="outlined"
@@ -63,7 +67,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="구매처"
                 name="purchasedFrom"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.purchasedFrom}
                 variant="outlined"
@@ -74,7 +78,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="상품명"
                 name="name"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.name}
                 variant="outlined"
@@ -85,7 +89,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="브랜드"
                 name="brand"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.brand}
                 variant="outlined"
@@ -96,7 +100,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="카테고리"
                 name="category"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.category}
                 variant="outlined"
@@ -108,7 +112,7 @@ const StockDetailIn = () => {
                 helperText="입고대기/수리/분실/재고있음"
                 label="상태"
                 name="status"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.status}
                 variant="outlined"
@@ -120,7 +124,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="현재 위치"
                 name="currentlyAt"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.currentlyAt}
                 variant="outlined"
@@ -132,7 +136,7 @@ const StockDetailIn = () => {
                 type="date"
                 label="입고 날짜"
                 name="stockedAt"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={
                   toDatePickerFormat(stock.stockedAt) ||
@@ -148,7 +152,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="해당없음"
                 // name="currentlyAt"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 // defaultValue={stock.currentlyAt}
                 variant="outlined"
@@ -162,7 +166,7 @@ const StockDetailIn = () => {
                 // helperText="Please specify the first name"
                 label="구매가격 $"
                 name="purchasedForUSD"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.purchasedForUSD}
                 variant="outlined"
@@ -173,7 +177,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="구매가격 ₩"
                 name="purchasedForKRW"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.purchasedForKRW}
                 variant="outlined"
@@ -184,7 +188,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="배대지비용"
                 name="internationalShippingCost"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.internationalShippingCost}
                 variant="outlined"
@@ -195,7 +199,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="배송비"
                 name="shippingCost"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.shippingCost}
                 variant="outlined"
@@ -206,7 +210,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="기타 추가 비용"
                 name="extraCost"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.extraCost}
                 variant="outlined"
@@ -218,7 +222,7 @@ const StockDetailIn = () => {
                 helperText="자동계산필드"
                 label="총 구매 비용"
                 name="totalPurchaseCost"
-                onChange={onChange}
+                onChange={handleChange}
                 required
                 defaultValue={stock.totalPurchaseCost}
                 variant="outlined"
@@ -232,7 +236,7 @@ const StockDetailIn = () => {
                 multiline
                 name="memo_inStock"
                 defaultValue={stock.memo_inStock}
-                onChange={onChange}
+                onChange={handleChange}
                 fullWidth
               />
             </Grid>
@@ -244,7 +248,7 @@ const StockDetailIn = () => {
                 multiline
                 name="meta_inStock"
                 defaultValue={stock.meta_inStock}
-                onChange={onChange}
+                onChange={handleChange}
                 fullWidth
               />
             </Grid>
@@ -255,7 +259,7 @@ const StockDetailIn = () => {
                 fullWidth
                 label="Select State"
                 name="state"
-                onChange={onChange}
+                handleChange
                 required
                 select
                 SelectProps={{ native: true }}
