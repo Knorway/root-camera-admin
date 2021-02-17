@@ -23,7 +23,7 @@ const useRowStyles = makeStyles({
   }
 });
 
-const StockListItem = ({ stock }) => {
+const SalesListItem = ({ stock }) => {
   const classes = useRowStyles();
   const [open, setOpen] = useState(false);
 
@@ -52,9 +52,9 @@ const StockListItem = ({ stock }) => {
     <>
       <TableRow
         key={stock._id}
-        style={{
-          backgroundColor: `${setStatusColor(stock.status)}`
-        }}
+        // style={{
+        //   backgroundColor: `${setStatusColor(stock.status)}`
+        // }}
         className={classes.root}
       >
         <TableCell>
@@ -62,14 +62,14 @@ const StockListItem = ({ stock }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{stock.status || '재고 있음'}</TableCell>
+        {/* <TableCell>{stock.status || '재고 있음'}</TableCell> */}
         <TableCell>
           <Link to={`/app/stocks/${stock._id}`}>{stock.pin}</Link>
         </TableCell>
         <TableCell>{stock.serialNumber}</TableCell>
         <TableCell>{stock.name}</TableCell>
-        <TableCell>{`${stock.totalPurchaseCost}원`}</TableCell>
-        <TableCell>{stock.stockedAt?.substring(0, 10)}</TableCell>
+        <TableCell>{`${stock.soldFor}원`}</TableCell>
+        <TableCell>{stock.soldAt?.substring(0, 10)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
@@ -406,4 +406,4 @@ const StockListItem = ({ stock }) => {
   );
 };
 
-export default StockListItem;
+export default SalesListItem;

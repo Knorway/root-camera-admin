@@ -6,6 +6,7 @@ import Page from 'src/components/Page';
 import { useRequest } from 'src/utils/useRequest';
 import useEditedStocks from 'src/utils/useEditedStocks';
 import { getStockById, GET_STOCK } from 'src/modules/stock';
+import { clearStack } from 'src/modules/editedStocks';
 import StockDetailIn from './StockDetailIn';
 import StockDetailOut from './StockDetailOut';
 
@@ -31,10 +32,9 @@ const StockDetailView = () => {
   }, []);
 
   useEffect(() => {
+    dispatch(clearStack());
     initializeNewStack(stock);
   }, [stock]);
-
-  // 디테일 리스트에서 나갈 때 리셋, 저장 후 리셋 등
 
   if (loading) return null;
 

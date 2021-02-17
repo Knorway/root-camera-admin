@@ -1,13 +1,22 @@
-const offset = new Date().getTimezoneOffset() * 60000;
-const today = new Date(Date.now() - offset);
-const todaySubstring = today.toISOString().substring(0, 10);
+const generateDate = () => {
+	const offset = new Date().getTimezoneOffset() * 60000;
+	const today = new Date(Date.now() - offset);
+	const todayYYMMDD = today.toISOString().substring(0, 10);
+	const todayHHMMSS = today.toISOString().substring(10, 24);
 
-const isToday = (stock) => {
-	return stock.stockedAt === todaySubstring;
+	return { today, todayYYMMDD, todayHHMMSS };
+};
+
+const isToday = (stockedAt) => {
+	const { todayYYMMDD } = generateDate();
+
+	return stockedAt === todayYYMMDD;
 };
 
 const formatToday = () => {
-	return new Date(`${todaySubstring} ${today.toTimeString()}`);
+	const { todayYYMMDD, todayHHMMSS } = generateDate();
+
+	return new Date(todayYYMMDD + todayHHMMSS);
 };
 
-export { today, isToday, formatToday };
+export { generateDate, isToday, formatToday };

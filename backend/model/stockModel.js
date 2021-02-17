@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { today } from '../controllers/utils/lib.js';
+import { generateDate } from '../controllers/utils/lib.js';
 
 const stockSchema = new mongoose.Schema({
 	inStock: {
@@ -56,7 +56,7 @@ const stockSchema = new mongoose.Schema({
 	},
 	stockedAt: {
 		type: Date,
-		default: today,
+		default: generateDate().today,
 	},
 	brand: {
 		type: String,
@@ -72,7 +72,7 @@ const stockSchema = new mongoose.Schema({
 	},
 	soldAt: {
 		type: Date,
-		default: today,
+		// default: generateDate().today,
 	},
 	buyer_name: {
 		type: String,

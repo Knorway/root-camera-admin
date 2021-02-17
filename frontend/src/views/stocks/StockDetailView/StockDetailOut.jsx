@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import {
@@ -98,6 +99,7 @@ const StockDetailOut = () => {
                   name="soldAt"
                   onChange={handleChange}
                   required
+                  // focused
                   defaultValue={
                     toDatePickerFormat(stock.soldAt) ||
                     toDatePickerFormat(new Date(), { new: true })

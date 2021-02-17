@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, makeStyles } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { clearStack } from 'src/modules/editedStocks';
 import Page from 'src/components/Page';
 import StocksList from './StocksList';
 import Toolbar from './Toolbar';
@@ -15,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
 
 const StockListView = () => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearStack());
+  }, []);
 
   return (
     <Page className={classes.root} title="재고">

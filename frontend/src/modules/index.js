@@ -5,11 +5,13 @@ import request from './request';
 import stocks from './stocks';
 import stock from './stock';
 import editedStocks from './editedStocks';
+import sales from './sales';
 
 const rootReducer = combineReducers({
   request,
   stocks,
   stock,
+  sales,
   editedStocks
 });
 

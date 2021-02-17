@@ -17,6 +17,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { stackNewStocks } from 'src/modules/stocks';
 import useEditedStocks from 'src/utils/useEditedStocks';
+import { clearStack } from 'src/modules/editedStocks';
 
 const useStyles = makeStyles((theme) => ({
   root: {},

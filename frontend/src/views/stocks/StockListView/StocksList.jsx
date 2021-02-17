@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const StocksList = ({ className, customers, ...rest }) => {
   const classes = useStyles();
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(100);
   const [page, setPage] = useState(0);
 
   const dispatch = useDispatch();
@@ -47,8 +47,10 @@ const StocksList = ({ className, customers, ...rest }) => {
   };
 
   useEffect(() => {
-    dispatch(getStocks());
-  }, []);
+    const query = { limit };
+
+    dispatch(getStocks(query));
+  }, [limit]);
 
   if (loading) return <Loader />;
 
@@ -57,12 +59,12 @@ const StocksList = ({ className, customers, ...rest }) => {
       <Card className={clsx(classes.root, className)} {...rest}>
         <TablePagination
           component="div"
-          // count={customers.length}
+          count={stocks.length}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleLimitChange}
           page={page}
           rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[100, 200, 500]}
           labelRowsPerPage="페이지당 재고"
         />
         <PerfectScrollbar>

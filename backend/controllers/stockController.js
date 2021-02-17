@@ -3,12 +3,19 @@ import Stock from '../model/stockModel.js';
 import * as utils from './utils/lib.js';
 
 export const getStocks = asyncHandler(async (req, res) => {
-	const stocks = await Stock.find({}).sort({ stockedAt: -1 });
+	const { limit } = req.query;
+
+	const stocks = await Stock.find({ inStock: true })
+		.limit(+limit)
+		.sort({ stockedAt: -1 });
 
 	if (!stocks) {
 		res.status(404);
-		throw new Error('존재하지 않는 재고입니다');
+		throw new Error('재고 목록을 불러오는 데 실패했습니다');
 	}
+
+	const count = await Stock.countDocuments();
+	console.log(count);
 
 	res.status(200);
 	res.json(stocks);
@@ -28,8 +35,11 @@ export const getStockById = asyncHandler(async (req, res) => {
 });
 
 export const createStock = asyncHandler(async (req, res) => {
+	const { today } = utils.generateDate();
+
 	const stock = await Stock.create({
 		pin: Date.now(),
+		stockedAt: today,
 	});
 
 	if (!stock) {
@@ -48,7 +58,7 @@ export const deleteStock = asyncHandler(async (req, res) => {
 
 	if (!stock) {
 		res.status(404);
-		throw new Error('존재하지 않는 재고입니다');
+		throw new Error('재고를 삭제하는 데 실패했습니다');
 	} else {
 		stock.remove();
 		res.status(200);
@@ -65,8 +75,10 @@ export const editStocks = asyncHandler(async (req, res) => {
 			{
 				...stock,
 				status: stock.status || '입고대기',
-				stockedAt: utils.isToday(stock) ? utils.formatToday() : stock.stockedAt,
-				soldAt: utils.isToday(stock) ? utils.formatToday() : stock.soldAt,
+				stockedAt: utils.isToday(stock.stockedAt)
+					? utils.formatToday()
+					: stock.stockedAt,
+				soldAt: stock.soldAt ? stock.soldAt : utils.formatToday(),
 				pin: !stock.pin ? Date.now() : stock.pin,
 			},
 			{ new: true }
@@ -74,12 +86,12 @@ export const editStocks = asyncHandler(async (req, res) => {
 	});
 
 	if (!result) {
-		res.status(404);
+		res.status(400);
 		throw new Error('재고를 수정하는 데 실패했습니다');
 	}
 
 	const editedStocks = await Promise.all(result);
 
 	res.status(200);
-	res.json({ message: editedStocks });
+	res.json(editedStocks);
 });

@@ -6,8 +6,7 @@ export const stackEditedStocks = createAction(
   ({ editedStock }) => editedStock,
   ({ stockId }) => stockId
 );
-export const clearStack = createAction('editedStocks/CEARL_ONE');
-export const clearStackAll = createAction('editedStocks/CLEAR_ALL');
+export const clearStack = createAction('editedStocks/CLEAR');
 
 const initialState = { stack: {}, isSaved: true };
 
@@ -24,8 +23,7 @@ const reducer = handleActions(
         }
       }
     }),
-    [clearStack]: (state, action) => {},
-    [clearStackAll]: (state, action) => {}
+    [clearStack]: (state, action) => initialState
   },
   initialState
 );
