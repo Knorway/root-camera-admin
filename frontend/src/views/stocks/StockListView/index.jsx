@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 
 const StockListView = () => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
 
   useEffect(() => {

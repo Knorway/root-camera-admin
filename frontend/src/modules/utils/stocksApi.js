@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const getStocks = async (query = {}) => {
-  const { limit } = query;
-  const response = await axios.get(`/api/stocks?limit=${limit}`);
+  const { limit, page } = query;
+  const response = await axios.get(`/api/stocks?limit=${limit}&page=${page}`);
   return response;
 };
 

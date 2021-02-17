@@ -8,7 +8,7 @@ import { his } from 'history';
 const useEditedStocks = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data: stock } = useSelector((state) => state.stock);
+  const { stock } = useSelector((state) => state.stock);
 
   const initializeNewStack = useCallback((stock) => {
     dispatch(

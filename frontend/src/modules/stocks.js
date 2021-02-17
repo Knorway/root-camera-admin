@@ -10,17 +10,19 @@ export const getStocks = createRequestThunk(GET_STOCKS, api.getStocks);
 export const stackNewStocks = createAction(STACK_STOCKS, (stock) => stock);
 
 const initialState = {
-  data: []
+  stocks: [],
+  count: 0
 };
 
 const reducer = handleActions(
   {
-    [GET_STOCKS_SUCCESS]: (state, { payload: stocks }) => ({
-      data: stocks
+    [GET_STOCKS_SUCCESS]: (state, { payload: { stocks, count } }) => ({
+      stocks,
+      count
     }),
     [STACK_STOCKS]: (state, { payload }) => ({
       ...state,
-      data: [payload, ...state.data]
+      stocks: [payload, ...state.stocks]
     })
   },
   initialState

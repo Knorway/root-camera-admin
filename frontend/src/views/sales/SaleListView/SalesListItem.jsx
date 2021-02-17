@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import {
   Box,
+  Checkbox,
   Collapse,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
   Grid,
   IconButton,
   makeStyles,
@@ -80,321 +85,201 @@ const SalesListItem = ({ stock }) => {
                 spacing={2}
                 style={{ paddingBottom: 8, paddingTop: 8 }}
               >
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
-                    label="품번"
-                    name="pin"
+                    label="구매자"
+                    name="buyer_name"
                     onChange={handleChange}
                     required
-                    defaultValue={stock.pin}
+                    defaultValue={stock.buyer_name}
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
-                    label="일련번호"
-                    name="serialNumber"
+                    label="구매자 연락처"
+                    name="buyer_phoneNumber"
                     onChange={handleChange}
                     required
-                    defaultValue={stock.serialNumber}
+                    defaultValue={stock.buyer_phoneNumber}
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="구매처"
-                    name="purchasedFrom"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.purchasedFrom}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="상품명"
-                    name="name"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.name}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="브랜드"
-                    name="brand"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.brand}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="카테고리"
-                    name="category"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.category}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    // helperText="입고대기/수리/분실/재고있음"
-                    label="상태"
-                    name="status"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.status}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="현재 위치"
-                    name="currentlyAt"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.currentlyAt}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
                     type="date"
-                    label="입고 날짜"
-                    name="stockedAt"
+                    label="판매 날짜"
+                    name="soldAt"
                     onChange={handleChange}
                     required
+                    // focused
                     defaultValue={
-                      toDatePickerFormat(stock.stockedAt) ||
-                      toDatePickerFormat(new Date(), {
-                        new: true
-                      })
+                      toDatePickerFormat(stock.soldAt) ||
+                      toDatePickerFormat(new Date(), { new: true })
                     }
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={6}>
+                  <FormControl
+                    component="fieldset"
+                    className={classes.formControl}
+                  >
+                    <FormLabel component="legend">판매 루트</FormLabel>
+                    <FormGroup row>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked={stock.soldFrom_site}
+                            onChange={handleChange}
+                            name="soldFrom_site"
+                          />
+                        }
+                        label="공홈"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked={stock.soldFrom_insta}
+                            onChange={handleChange}
+                            name="soldFrom_insta"
+                          />
+                        }
+                        label="인스타"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked={stock.soldFrom_jungna}
+                            onChange={handleChange}
+                            name="soldFrom_jungna"
+                          />
+                        }
+                        label="중고나라"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked={stock.soldFrom_bungae}
+                            onChange={handleChange}
+                            name="soldFrom_bungae"
+                          />
+                        }
+                        label="번개장터"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked={stock.soldFrom_register}
+                            onChange={handleChange}
+                            name="soldFrom_register"
+                          />
+                        }
+                        label="등록기"
+                      />
+                    </FormGroup>
+                    {/* <FormHelperText>Be careful</FormHelperText> */}
+                  </FormControl>
+                </Grid>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
-                    label="해당없음"
-                    // name="currentlyAt"
+                    label="판매 루트 상세"
+                    name="soldFrom_method"
                     onChange={handleChange}
                     required
-                    // defaultValue={stock.currentlyAt}
+                    defaultValue={stock.soldFrom_method}
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                    disabled
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
                     // helperText="Please specify the first name"
-                    label="구매가격 $"
-                    name="purchasedForUSD"
+                    label="판매가격"
+                    name="soldFor"
                     onChange={handleChange}
                     required
-                    defaultValue={stock.purchasedForUSD}
+                    defaultValue={stock.soldFor}
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
+
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
-                    label="구매가격 ₩"
-                    name="purchasedForKRW"
+                    helperText="자동계산필드"
+                    label="45%"
+                    name="temp"
                     onChange={handleChange}
                     required
-                    defaultValue={stock.purchasedForKRW}
+                    defaultValue={stock.temp}
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
-                    label="배대지비용"
-                    name="internationalShippingCost"
+                    helperText="자동계산필드"
+                    label="35%"
+                    name="temp"
                     onChange={handleChange}
                     required
-                    defaultValue={stock.internationalShippingCost}
+                    defaultValue={stock.temp}
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
-                    label="배송비"
-                    name="shippingCost"
+                    helperText="자동계산필드"
+                    label="20%"
+                    name="temp"
                     onChange={handleChange}
                     required
-                    defaultValue={stock.shippingCost}
+                    defaultValue={stock.temp}
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={6}>
                   <TextField
                     fullWidth
-                    label="기타 추가 비용"
-                    name="extraCost"
+                    helperText="자동계산필드"
+                    label="순이익"
+                    name="profit"
                     onChange={handleChange}
                     required
-                    defaultValue={stock.extraCost}
+                    defaultValue={stock.profit}
                     variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    // helperText="자동계산필드"
-                    label="총 구매 비용"
-                    name="totalPurchaseCost"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.totalPurchaseCost}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={12}>
                   <TextField
                     id="filled-textarea"
-                    label="재고 특징 상세"
-                    multiline
-                    name="memo_inStock"
-                    defaultValue={stock.memo_inStock}
+                    label="판매 특징 상세"
+                    placeholder="Placeholder"
+                    name="memo_sold"
                     onChange={handleChange}
+                    defaultValue={stock.memo_sold}
+                    multiline
+                    // variant="filled"
                     fullWidth
-                    InputProps={{
-                      style: { fontSize: 14, paddingTop: 0 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
+                <Grid item md={6} xs={12}>
                   <TextField
                     id="filled-textarea"
                     label="비고"
-                    multiline
-                    name="meta_inStock"
-                    defaultValue={stock.meta_inStock}
+                    placeholder="Placeholder"
+                    name="meta_sold"
                     onChange={handleChange}
+                    defaultValue={stock.meta_sold}
+                    multiline
+                    // variant="filled"
                     fullWidth
-                    InputProps={{
-                      style: { fontSize: 14, paddingTop: 0 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
                   />
                 </Grid>
               </Grid>

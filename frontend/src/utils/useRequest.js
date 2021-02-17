@@ -1,7 +1,8 @@
 import { shallowEqual, useSelector } from 'react-redux';
 
 export const useRequest = (type, storeName) => {
-  const { data } = useSelector((state) => state[storeName], shallowEqual);
+  const state = useSelector((state) => state[storeName], shallowEqual);
+  console.log(state);
   const { loading, error } = useSelector(
     ({ request }) => ({
       loading: request.loading?.[type],
@@ -12,7 +13,7 @@ export const useRequest = (type, storeName) => {
 
   return {
     loading,
-    data,
+    data: state,
     error
   };
 };

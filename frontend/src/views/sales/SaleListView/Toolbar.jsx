@@ -14,8 +14,6 @@ import {
 import { Search as SearchIcon } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import useEditedStocks from 'src/utils/useEditedStocks';
-import { stackNewStocks } from 'src/modules/stocks';
-import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -33,15 +31,6 @@ const Toolbar = ({ className, ...rest }) => {
   const dispatch = useDispatch();
 
   const { onSave } = useEditedStocks();
-
-  // const onClick = async () => {
-  //   try {
-  //     const { data } = await axios.post('/api/stocks');
-  //     dispatch(stackNewStocks(data));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const handleSave = () => {
     if (window.confirm('변경사항들이 일괄 변경됩니다. 저장하시겠습니까?')) {

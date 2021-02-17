@@ -1,12 +1,14 @@
 import asyncHandler from 'express-async-handler';
 import Stock from '../model/stockModel.js';
-import * as utils from './utils/lib.js';
+import { formatToday, generateDate, isToday } from './utils/lib.js';
 
 export const getStocks = asyncHandler(async (req, res) => {
-	const { limit } = req.query;
+	const { limit, page } = req.query;
+	const pageNumber = +page + 1;
 
 	const stocks = await Stock.find({ inStock: true })
 		.limit(+limit)
+		.skip(+limit * (pageNumber - 1))
 		.sort({ stockedAt: -1 });
 
 	if (!stocks) {
@@ -14,11 +16,11 @@ export const getStocks = asyncHandler(async (req, res) => {
 		throw new Error('재고 목록을 불러오는 데 실패했습니다');
 	}
 
-	const count = await Stock.countDocuments();
-	console.log(count);
+	const count = await Stock.countDocuments({ inStock: true });
+	// const totalCount = await Stock.countDocuments()
 
 	res.status(200);
-	res.json(stocks);
+	res.json({ stocks, count });
 });
 
 export const getStockById = asyncHandler(async (req, res) => {
@@ -35,7 +37,7 @@ export const getStockById = asyncHandler(async (req, res) => {
 });
 
 export const createStock = asyncHandler(async (req, res) => {
-	const { today } = utils.generateDate();
+	const { today } = generateDate();
 
 	const stock = await Stock.create({
 		pin: Date.now(),
@@ -75,10 +77,12 @@ export const editStocks = asyncHandler(async (req, res) => {
 			{
 				...stock,
 				status: stock.status || '입고대기',
-				stockedAt: utils.isToday(stock.stockedAt)
-					? utils.formatToday()
-					: stock.stockedAt,
-				soldAt: stock.soldAt ? stock.soldAt : utils.formatToday(),
+				stockedAt: isToday(stock.stockedAt) ? formatToday() : stock.stockedAt,
+				soldAt: !stock.inStock
+					? stock.soldAt
+						? stock.soldAt
+						: formatToday()
+					: stock.soldAt,
 				pin: !stock.pin ? Date.now() : stock.pin,
 			},
 			{ new: true }

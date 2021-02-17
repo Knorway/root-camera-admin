@@ -33,23 +33,31 @@ const useStyles = makeStyles((theme) => ({
 
 const SalesList = ({ className, customers, ...rest }) => {
   const classes = useStyles();
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(100);
   const [page, setPage] = useState(0);
 
   const dispatch = useDispatch();
-  const { loading, data: stocks } = useRequest(GET_SALES, 'sales');
+  const {
+    loading,
+    data: { sales, count }
+  } = useRequest(GET_SALES, 'sales');
 
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
+  const handleLimitChange = (e) => {
+    const { value } = e.target;
+    setLimit(value);
+
+    if (page !== 1) {
+      setPage(1);
+    }
   };
 
-  const handlePageChange = (event, newPage) => {
+  const handlePageChange = (e, newPage) => {
     setPage(newPage);
   };
 
   useEffect(() => {
     dispatch(getSales());
-  }, []);
+  }, [limit, page]);
 
   if (loading) return <Loader />;
 
@@ -58,13 +66,13 @@ const SalesList = ({ className, customers, ...rest }) => {
       <Card className={clsx(classes.root, className)} {...rest}>
         <TablePagination
           component="div"
-          // count={customers.length}
+          count={count}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleLimitChange}
           page={page}
           rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25]}
-          labelRowsPerPage="페이지당 재고"
+          rowsPerPageOptions={[100, 200, 500]}
+          labelRowsPerPage="페이지당 판매"
         />
         <PerfectScrollbar>
           <Box minWidth={1050}>
@@ -81,7 +89,7 @@ const SalesList = ({ className, customers, ...rest }) => {
                 </TableRow>
               </TableHead>
               <TableBody className={classes.table}>
-                {stocks.map((stock) => (
+                {sales.map((stock) => (
                   <SalesListItem key={stock._id} stock={stock} />
                 ))}
               </TableBody>

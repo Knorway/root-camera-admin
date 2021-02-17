@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -30,27 +31,33 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const StocksList = ({ className, customers, ...rest }) => {
+const StocksList = ({ className, ...rest }) => {
   const classes = useStyles();
   const [limit, setLimit] = useState(100);
   const [page, setPage] = useState(0);
 
   const dispatch = useDispatch();
-  const { loading, data: stocks } = useRequest(GET_STOCKS, 'stocks');
+  const {
+    loading,
+    data: { stocks, count }
+  } = useRequest(GET_STOCKS, 'stocks');
 
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
+  const handleLimitChange = (e) => {
+    const { value } = e.target;
+    setLimit(value);
+
+    if (page !== 1) {
+      setPage(1);
+    }
   };
 
-  const handlePageChange = (event, newPage) => {
+  const handlePageChange = (e, newPage) => {
     setPage(newPage);
   };
 
   useEffect(() => {
-    const query = { limit };
-
-    dispatch(getStocks(query));
-  }, [limit]);
+    dispatch(getStocks({ limit, page }));
+  }, [limit, page]);
 
   if (loading) return <Loader />;
 
@@ -59,7 +66,7 @@ const StocksList = ({ className, customers, ...rest }) => {
       <Card className={clsx(classes.root, className)} {...rest}>
         <TablePagination
           component="div"
-          count={stocks.length}
+          count={count}
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleLimitChange}
           page={page}

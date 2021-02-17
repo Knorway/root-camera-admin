@@ -12,5 +12,5 @@ export const getSales = asyncHandler(async (req, res) => {
 	}
 
 	res.status(200);
-	res.json(sales);
+	res.json({ sales, count: sales.length });
 });

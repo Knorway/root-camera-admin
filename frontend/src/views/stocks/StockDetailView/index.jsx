@@ -24,7 +24,10 @@ const StockDetailView = () => {
   const { id } = useMatch('/app/stocks/:id').params;
 
   const dispatch = useDispatch();
-  const { loading, data: stock } = useRequest(GET_STOCK, 'stock');
+  const {
+    loading,
+    data: { stock }
+  } = useRequest(GET_STOCK, 'stock');
   const { initializeNewStack } = useEditedStocks();
 
   useEffect(() => {

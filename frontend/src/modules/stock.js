@@ -8,13 +8,13 @@ const GET_STOCK_SUCCESS = 'stock/GET_STOCK_SUCCESS';
 export const getStockById = createRequestThunk(GET_STOCK, api.getStockById);
 
 const initialState = {
-  data: []
+  stock: []
 };
 
 const reducer = handleActions(
   {
     [GET_STOCK_SUCCESS]: (state, { payload: stock }) => ({
-      data: stock
+      stock
     })
   },
   initialState
