@@ -17,6 +17,7 @@ import {
 import { useRequest } from 'src/utils/useRequest';
 import { GET_SALES } from 'src/modules/sales';
 import Loader from 'src/components/Loader';
+import useSearchQuery from 'src/utils/useSearchQuery';
 import { getSales } from '../../../modules/sales';
 import SalesListItem from './SalesListItem';
 
@@ -33,10 +34,13 @@ const useStyles = makeStyles((theme) => ({
 
 const SalesList = ({ className, customers, ...rest }) => {
   const classes = useStyles();
-  const [limit, setLimit] = useState(100);
-  const [page, setPage] = useState(0);
 
   const dispatch = useDispatch();
+  const {
+    pagination: { page, limit },
+    onChangePage,
+    onChangeLimit
+  } = useSearchQuery();
   const {
     loading,
     data: { sales, count }
@@ -44,20 +48,17 @@ const SalesList = ({ className, customers, ...rest }) => {
 
   const handleLimitChange = (e) => {
     const { value } = e.target;
-    setLimit(value);
-
-    if (page !== 1) {
-      setPage(1);
-    }
+    onChangeLimit(value);
+    onChangePage(0);
   };
 
   const handlePageChange = (e, newPage) => {
-    setPage(newPage);
+    onChangePage(newPage);
   };
 
   useEffect(() => {
     dispatch(getSales());
-  }, [limit, page]);
+  }, [page, limit]);
 
   if (loading) return <Loader />;
 

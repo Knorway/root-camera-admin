@@ -1,9 +1,8 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { clearStack, stackEditedStocks } from 'src/modules/editedStocks';
-import { his } from 'history';
+import { stackEditedStocks } from 'src/modules/editedStocks';
 
 const useEditedStocks = () => {
   const navigate = useNavigate();
@@ -37,8 +36,6 @@ const useEditedStocks = () => {
     dispatch(async (_, getState) => {
       const { stack } = getState().editedStocks;
       await axios.put('/api/stocks', stack);
-      // dispatch(clearStack());
-      // navigate('/app/stocks');
       navigate(-1);
     });
   };

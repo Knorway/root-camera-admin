@@ -2,7 +2,9 @@ import asyncHandler from 'express-async-handler';
 import Stock from '../model/stockModel.js';
 
 export const getSales = asyncHandler(async (req, res) => {
-	const sales = await Stock.find({ inStock: false, status: { $ne: '분실' } }).sort({
+	const query = { inStock: false, status: { $ne: '분실' } };
+
+	const sales = await Stock.find(query).sort({
 		soldAt: -1,
 	});
 

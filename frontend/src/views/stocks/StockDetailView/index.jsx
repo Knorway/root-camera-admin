@@ -31,7 +31,7 @@ const StockDetailView = () => {
   const { initializeNewStack } = useEditedStocks();
 
   useEffect(() => {
-    dispatch(getStockById(id));
+    dispatch(getStockById({ query: false, params: id }));
   }, []);
 
   useEffect(() => {

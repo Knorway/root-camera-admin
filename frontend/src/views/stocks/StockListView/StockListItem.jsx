@@ -48,6 +48,8 @@ const StockListItem = ({ stock }) => {
     }
   };
 
+  console.log('stocksListItem');
+
   return (
     <>
       <TableRow
@@ -406,4 +408,4 @@ const StockListItem = ({ stock }) => {
   );
 };
 
-export default StockListItem;
+export default React.memo(StockListItem);

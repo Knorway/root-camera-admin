@@ -3,11 +3,20 @@ import { errorDuringRequest, finishLoading, startLoading } from '../request';
 export const createRequestThunk = (type, request) => {
   const SUCCESS = `${type}_SUCCESS`;
 
-  return (params) => async (dispatch) => {
+  return (
+    option = {
+      query: true,
+      params: null
+    }
+  ) => async (dispatch, getState) => {
+    const { query, params } = option;
+    const { searchQuery } = getState();
+    const data = query ? searchQuery : params;
+
     dispatch(startLoading(type));
 
     try {
-      const response = await request(params);
+      const response = await request(data);
       dispatch({ type: SUCCESS, payload: response.data });
     } catch (error) {
       dispatch(

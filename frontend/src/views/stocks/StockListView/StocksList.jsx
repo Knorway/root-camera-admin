@@ -16,8 +16,10 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { getStocks, GET_STOCKS } from 'src/modules/stocks';
+import useSearchQuery from 'src/utils/useSearchQuery';
 import { useRequest } from 'src/utils/useRequest';
 import Loader from 'src/components/Loader';
+import { resetAllSearchQueries } from 'src/modules/searchQuery';
 import StockListItem from './StockListItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,10 +35,13 @@ const useStyles = makeStyles((theme) => ({
 
 const StocksList = ({ className, ...rest }) => {
   const classes = useStyles();
-  const [limit, setLimit] = useState(100);
-  const [page, setPage] = useState(0);
 
   const dispatch = useDispatch();
+  const {
+    pagination: { page, limit },
+    onChangePage,
+    onChangeLimit
+  } = useSearchQuery();
   const {
     loading,
     data: { stocks, count }
@@ -44,20 +49,22 @@ const StocksList = ({ className, ...rest }) => {
 
   const handleLimitChange = (e) => {
     const { value } = e.target;
-    setLimit(value);
-
-    if (page !== 1) {
-      setPage(1);
-    }
+    onChangeLimit(value);
+    onChangePage(0);
   };
 
   const handlePageChange = (e, newPage) => {
-    setPage(newPage);
+    onChangePage(newPage);
   };
 
+  // 근데 이러면 나중에 뒤로가기 캐싱에 문제 생기는데
   useEffect(() => {
-    dispatch(getStocks({ limit, page }));
-  }, [limit, page]);
+    dispatch(resetAllSearchQueries());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getStocks());
+  }, [page, limit]);
 
   if (loading) return <Loader />;
 
@@ -101,4 +108,4 @@ const StocksList = ({ className, ...rest }) => {
   );
 };
 
-export default StocksList;
+export default React.memo(StocksList);

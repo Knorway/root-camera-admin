@@ -3,10 +3,25 @@ import Stock from '../model/stockModel.js';
 import { formatToday, generateDate, isToday } from './utils/lib.js';
 
 export const getStocks = asyncHandler(async (req, res) => {
-	const { limit, page } = req.query;
+	const { limit, page, ...rest } = req.query;
 	const pageNumber = +page + 1;
+	const query = { inStock: true };
+	let filter = {};
 
-	const stocks = await Stock.find({ inStock: true })
+	Object.entries(rest).forEach((e) => {
+		filter = {
+			inStock: true,
+			...filter,
+			[e[0]]: {
+				$regex: e[1],
+				$options: 'i',
+			},
+		};
+	});
+
+	console.log(filter);
+
+	const stocks = await Stock.find(filter)
 		.limit(+limit)
 		.skip(+limit * (pageNumber - 1))
 		.sort({ stockedAt: -1 });
@@ -55,17 +70,16 @@ export const createStock = asyncHandler(async (req, res) => {
 
 export const deleteStock = asyncHandler(async (req, res) => {
 	const { id } = req.params;
-
 	const stock = await Stock.findById(id);
 
 	if (!stock) {
 		res.status(404);
 		throw new Error('재고를 삭제하는 데 실패했습니다');
-	} else {
-		stock.remove();
-		res.status(200);
-		res.json({ message: '성공적으로 삭제되었습니다' });
 	}
+
+	stock.remove();
+	res.status(200);
+	res.json({ message: '성공적으로 삭제되었습니다' });
 });
 
 export const editStocks = asyncHandler(async (req, res) => {

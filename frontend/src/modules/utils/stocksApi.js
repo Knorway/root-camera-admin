@@ -1,8 +1,15 @@
 import axios from 'axios';
 
-const getStocks = async (query = {}) => {
-  const { limit, page } = query;
-  const response = await axios.get(`/api/stocks?limit=${limit}&page=${page}`);
+const getStocks = async (query) => {
+  let url = '/api/stocks?';
+
+  Object.values(query).forEach((each) => {
+    Object.entries(each).forEach((keyword) => {
+      url += `${keyword[0]}=${keyword[1]}&`;
+    });
+  });
+
+  const response = await axios.get(url);
   return response;
 };
 

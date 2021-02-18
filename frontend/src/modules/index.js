@@ -6,13 +6,15 @@ import stocks from './stocks';
 import stock from './stock';
 import editedStocks from './editedStocks';
 import sales from './sales';
+import searchQuery from './searchQuery';
 
 const rootReducer = combineReducers({
   request,
   stocks,
   stock,
   sales,
-  editedStocks
+  editedStocks,
+  searchQuery
 });
 
 const store = createStore(
