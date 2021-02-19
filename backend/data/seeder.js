@@ -8,7 +8,7 @@ mongoDB();
 
 export const importData = async (stocks) => {
 	try {
-		await Stock.deleteMany();
+		// await Stock.deleteMany();
 
 		await Stock.insertMany(stocks);
 
@@ -35,5 +35,5 @@ export const destroyData = async () => {
 if (process.argv[2] === '-d') {
 	destroyData();
 } else {
-	importCsv('../data_final.csv', importData);
+	importCsv('../rootadmin-stocks.csv', importData);
 }

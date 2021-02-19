@@ -58,6 +58,7 @@ const StocksList = ({ className, ...rest }) => {
   };
 
   // 근데 이러면 나중에 뒤로가기 캐싱에 문제 생기는데
+  // searchQuery 객체가 비어있을 때만 수행하도록?
   useEffect(() => {
     dispatch(resetAllSearchQueries());
   }, []);

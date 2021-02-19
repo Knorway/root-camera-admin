@@ -4,22 +4,12 @@ import { formatToday, generateDate, isToday } from './utils/lib.js';
 
 export const getStocks = asyncHandler(async (req, res) => {
 	const { limit, page, ...rest } = req.query;
+	const filter = { inStock: true };
 	const pageNumber = +page + 1;
-	const query = { inStock: true };
-	let filter = {};
 
 	Object.entries(rest).forEach((e) => {
-		filter = {
-			inStock: true,
-			...filter,
-			[e[0]]: {
-				$regex: e[1],
-				$options: 'i',
-			},
-		};
+		filter[e[0]] = { $regex: e[1], $options: 'i' };
 	});
-
-	console.log(filter);
 
 	const stocks = await Stock.find(filter)
 		.limit(+limit)
@@ -31,8 +21,8 @@ export const getStocks = asyncHandler(async (req, res) => {
 		throw new Error('재고 목록을 불러오는 데 실패했습니다');
 	}
 
-	const count = await Stock.countDocuments({ inStock: true });
-	// const totalCount = await Stock.countDocuments()
+	const count = await Stock.countDocuments(filter);
+	console.log(count);
 
 	res.status(200);
 	res.json({ stocks, count });

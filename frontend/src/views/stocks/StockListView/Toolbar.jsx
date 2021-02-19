@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -22,9 +22,8 @@ import SearchIconMUI from '@material-ui/icons/Search';
 import { Search as SearchIcon } from 'react-feather';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { stackNewStocks } from 'src/modules/stocks';
+import { getStocks, stackNewStocks } from 'src/modules/stocks';
 import useEditedStocks from 'src/utils/useEditedStocks';
-import { clearStack } from 'src/modules/editedStocks';
 import useSearchQuery from '../../../utils/useSearchQuery';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,12 +37,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Toolbar = ({ className, ...rest }) => {
-  const [category, setCategory] = useState('pin');
+  const [category, setCategory] = useState('name');
+  const [input, setInput] = useState('');
+  const inputRef = useRef();
   const classes = useStyles();
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const { onSave } = useEditedStocks();
-  const { onChangeKeyword } = useSearchQuery();
+  const { onChangeKeyword, onResetKeyword, onChangePage } = useSearchQuery();
 
   const onClick = async () => {
     try {
@@ -61,13 +62,26 @@ const Toolbar = ({ className, ...rest }) => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChangeCategory = (e) => {
     setCategory(e.target.value);
+    setInput('');
+    onResetKeyword();
   };
 
   const handleInput = (e) => {
-    onChangeKeyword({ [category]: e.target.value });
+    const { value } = e.target;
+    onChangeKeyword({ [category]: value });
+    setInput(value);
   };
+
+  const handleKeydown = () => {
+    dispatch(getStocks());
+    onChangePage(0);
+  };
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [category]);
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>
@@ -105,9 +119,17 @@ const Toolbar = ({ className, ...rest }) => {
                         </InputAdornment>
                       )
                     }}
-                    placeholder="Search customer"
+                    inputRef={inputRef}
+                    placeholder="재고 검색"
                     variant="outlined"
+                    value={input}
                     onChange={handleInput}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleKeydown();
+                      }
+                    }}
+                    // autoFocus
                   />
                 </Grid>
                 <Grid item sm={6} md={3} lg={3} style={{ paddingLeft: 10 }}>
@@ -123,16 +145,17 @@ const Toolbar = ({ className, ...rest }) => {
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
                       // value={category}
-                      defaultValue="pin"
-                      onChange={handleChange}
+                      defaultValue="name"
+                      onChange={handleChangeCategory}
                       label="search"
                     >
                       {/* <MenuItem value="">
                         <em>None</em>
                       </MenuItem> */}
-                      <MenuItem value="pin">품번</MenuItem>
                       <MenuItem value="name">제품명</MenuItem>
+                      <MenuItem value="status">상태</MenuItem>
                       <MenuItem value="memo_inStock">메모</MenuItem>
+                      <MenuItem value="pin">품번</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -142,6 +165,7 @@ const Toolbar = ({ className, ...rest }) => {
                       // color="primary"
                       className={classes.iconButton}
                       aria-label="directions"
+                      onClick={handleKeydown}
                     >
                       <SearchIconMUI />
                     </IconButton>
