@@ -27,6 +27,7 @@ const useEditedStocks = () => {
         stockId,
         editedStock: {
           [name]: value || checked
+          // totalPurchaseCost:
         }
       })
     );
@@ -49,7 +50,13 @@ const useEditedStocks = () => {
     };
   };
 
-  return { stock, onChange, onSave, onDelete, initializeNewStack };
+  return {
+    stock,
+    onChange,
+    onSave,
+    onDelete,
+    initializeNewStack
+  };
 };
 
 export default useEditedStocks;

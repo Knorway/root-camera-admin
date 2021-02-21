@@ -72,7 +72,6 @@ const stockSchema = new mongoose.Schema({
 	},
 	soldAt: {
 		type: Date,
-		// default: generateDate().today,
 	},
 	buyer_name: {
 		type: String,

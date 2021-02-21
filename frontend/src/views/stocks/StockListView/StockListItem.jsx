@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { setStatusColor, toDatePickerFormat } from 'src/utils/lib';
 import useEditedStocks from 'src/utils/useEditedStocks';
+import AutoTotalCostField from '../AutoTotalCostField';
 
 const useRowStyles = makeStyles({
   root: {
@@ -279,92 +280,9 @@ const StockListItem = ({ stock }) => {
                     }}
                   />
                 </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="구매가격 ₩"
-                    name="purchasedForKRW"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.purchasedForKRW}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="배대지비용"
-                    name="internationalShippingCost"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.internationalShippingCost}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="배송비"
-                    name="shippingCost"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.shippingCost}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="기타 추가 비용"
-                    name="extraCost"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.extraCost}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    // helperText="자동계산필드"
-                    label="총 구매 비용"
-                    name="totalPurchaseCost"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.totalPurchaseCost}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid>
+                {/* AutoField */}
+                <AutoTotalCostField stock={stock} size={2} listItem />
+                {/* AutoField */}
                 <Grid item md={2} xs={2}>
                   <TextField
                     id="filled-textarea"

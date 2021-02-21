@@ -22,7 +22,6 @@ export const getStocks = asyncHandler(async (req, res) => {
 	}
 
 	const count = await Stock.countDocuments(filter);
-	console.log(count);
 
 	res.status(200);
 	res.json({ stocks, count });
@@ -30,15 +29,16 @@ export const getStocks = asyncHandler(async (req, res) => {
 
 export const getStockById = asyncHandler(async (req, res) => {
 	const { id } = req.params;
-	const stock = await Stock.findById(id);
+	console.log(id);
 
-	if (!stock) {
+	try {
+		const stock = await Stock.findById(id);
+		res.status(200);
+		res.json(stock);
+	} catch (error) {
 		res.status(404);
 		throw new Error('존재하지 않는 재고입니다');
 	}
-
-	res.status(200);
-	res.json(stock);
 });
 
 export const createStock = asyncHandler(async (req, res) => {

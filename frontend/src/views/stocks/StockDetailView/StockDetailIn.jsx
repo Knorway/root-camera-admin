@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import {
   Box,
@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import { toDatePickerFormat } from 'src/utils/lib';
 import useEditedStocks from 'src/utils/useEditedStocks';
+import AutoTotalCostField from '../AutoTotalCostField';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -151,10 +152,8 @@ const StockDetailIn = () => {
               <TextField
                 fullWidth
                 label="해당없음"
-                // name="currentlyAt"
                 onChange={handleChange}
                 required
-                // defaultValue={stock.currentlyAt}
                 variant="outlined"
                 disabled
               />
@@ -163,8 +162,8 @@ const StockDetailIn = () => {
             <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
-                // helperText="Please specify the first name"
                 label="구매가격 $"
+                type="number"
                 name="purchasedForUSD"
                 onChange={handleChange}
                 required
@@ -172,67 +171,13 @@ const StockDetailIn = () => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={6}>
-              <TextField
-                fullWidth
-                label="구매가격 ₩"
-                name="purchasedForKRW"
-                onChange={handleChange}
-                required
-                defaultValue={stock.purchasedForKRW}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={6}>
-              <TextField
-                fullWidth
-                label="배대지비용"
-                name="internationalShippingCost"
-                onChange={handleChange}
-                required
-                defaultValue={stock.internationalShippingCost}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={6}>
-              <TextField
-                fullWidth
-                label="배송비"
-                name="shippingCost"
-                onChange={handleChange}
-                required
-                defaultValue={stock.shippingCost}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={6}>
-              <TextField
-                fullWidth
-                label="기타 추가 비용"
-                name="extraCost"
-                onChange={handleChange}
-                required
-                defaultValue={stock.extraCost}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={6}>
-              <TextField
-                fullWidth
-                helperText="자동계산필드"
-                label="총 구매 비용"
-                name="totalPurchaseCost"
-                onChange={handleChange}
-                required
-                defaultValue={stock.totalPurchaseCost}
-                variant="outlined"
-              />
-            </Grid>
+            {/* Auto calculate */}
+            <AutoTotalCostField />
+            {/* Auto calculate */}
             <Grid item md={6} xs={12}>
               <TextField
                 id="filled-textarea"
                 label="재고 특징 상세"
-                placeholder="Placeholder"
                 multiline
                 name="memo_inStock"
                 defaultValue={stock.memo_inStock}
@@ -244,7 +189,6 @@ const StockDetailIn = () => {
               <TextField
                 id="filled-textarea"
                 label="비고"
-                placeholder="Placeholder"
                 multiline
                 name="meta_inStock"
                 defaultValue={stock.meta_inStock}
@@ -252,27 +196,6 @@ const StockDetailIn = () => {
                 fullWidth
               />
             </Grid>
-
-            {/* 옵션 예제 */}
-            {/* <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                handleChange
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid> */}
           </Grid>
         </CardContent>
         <Divider />

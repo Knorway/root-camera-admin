@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -20,9 +20,8 @@ import {
 import SearchIconMUI from '@material-ui/icons/Search';
 import { Search as SearchIcon } from 'react-feather';
 import { useDispatch } from 'react-redux';
-import useEditedStocks from 'src/utils/useEditedStocks';
-import useSearchQuery from 'src/utils/useSearchQuery';
 import { getSales } from 'src/modules/sales';
+import useToolbar from 'src/utils/useToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -35,38 +34,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Toolbar = ({ className, ...rest }) => {
-  const [category, setCategory] = useState('name');
-  const [input, setInput] = useState('');
   const inputRef = useRef();
   const classes = useStyles();
-
   const dispatch = useDispatch();
-  const { onSave } = useEditedStocks();
-  const { onChangeKeyword, onResetKeyword, onChangePage } = useSearchQuery();
 
-  const handleSave = () => {
-    if (window.confirm('변경사항들이 일괄 변경됩니다. 저장하시겠습니까?')) {
-      onSave();
-      window.location.reload();
-    }
-  };
-
-  const handleChange = (e) => {
-    setCategory(e.target.value);
-    setInput('');
-    onResetKeyword();
-  };
-
-  const handleInput = (e) => {
-    const { value } = e.target;
-    onChangeKeyword({ [category]: value });
-    setInput(value);
-  };
-
-  const handleKeydown = () => {
-    dispatch(getSales());
-    onChangePage(0);
-  };
+  const {
+    input,
+    category,
+    handleInput,
+    handleChangeCategory,
+    handleKeydown,
+    handleSave
+  } = useToolbar();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -115,7 +94,9 @@ const Toolbar = ({ className, ...rest }) => {
                     onChange={handleInput}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
-                        handleKeydown();
+                        handleKeydown(() => {
+                          dispatch(getSales());
+                        });
                       }
                     }}
                   />
@@ -127,21 +108,20 @@ const Toolbar = ({ className, ...rest }) => {
                     fullWidth
                   >
                     <InputLabel id="demo-simple-select-outlined-label">
-                      검색 필드
+                      카테고리
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
-                      // value={category}
                       defaultValue="name"
-                      onChange={handleChange}
+                      onChange={handleChangeCategory}
                       label="search"
                     >
                       {/* <MenuItem value="">
                         <em>None</em>
                       </MenuItem> */}
                       <MenuItem value="name">제품명</MenuItem>
-                      <MenuItem value="status">상태</MenuItem>
+                      {/* <MenuItem value="status">상태</MenuItem> */}
                       <MenuItem value="memo_inStock">메모</MenuItem>
                       <MenuItem value="pin">품번</MenuItem>
                     </Select>

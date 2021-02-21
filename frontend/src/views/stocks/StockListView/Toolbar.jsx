@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -23,8 +23,7 @@ import { Search as SearchIcon } from 'react-feather';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { getStocks, stackNewStocks } from 'src/modules/stocks';
-import useEditedStocks from 'src/utils/useEditedStocks';
-import useSearchQuery from '../../../utils/useSearchQuery';
+import useToolbar from 'src/utils/useToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -37,46 +36,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Toolbar = ({ className, ...rest }) => {
-  const [category, setCategory] = useState('name');
-  const [input, setInput] = useState('');
   const inputRef = useRef();
   const classes = useStyles();
-
   const dispatch = useDispatch();
-  const { onSave } = useEditedStocks();
-  const { onChangeKeyword, onResetKeyword, onChangePage } = useSearchQuery();
+
+  const {
+    input,
+    category,
+    handleInput,
+    handleChangeCategory,
+    handleKeydown,
+    handleSave
+  } = useToolbar();
 
   const onClick = async () => {
-    try {
-      const { data } = await axios.post('/api/stocks');
-      dispatch(stackNewStocks(data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleSave = () => {
-    if (window.confirm('변경사항들이 일괄 변경됩니다. 저장하시겠습니까?')) {
-      onSave();
-      window.location.reload();
-    }
-  };
-
-  const handleChangeCategory = (e) => {
-    setCategory(e.target.value);
-    setInput('');
-    onResetKeyword();
-  };
-
-  const handleInput = (e) => {
-    const { value } = e.target;
-    onChangeKeyword({ [category]: value });
-    setInput(value);
-  };
-
-  const handleKeydown = () => {
-    dispatch(getStocks());
-    onChangePage(0);
+    const { data } = await axios.post('/api/stocks');
+    dispatch(stackNewStocks(data));
   };
 
   useEffect(() => {
@@ -126,7 +101,9 @@ const Toolbar = ({ className, ...rest }) => {
                     onChange={handleInput}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
-                        handleKeydown();
+                        handleKeydown(() => {
+                          dispatch(getStocks());
+                        });
                       }
                     }}
                     // autoFocus
@@ -139,12 +116,11 @@ const Toolbar = ({ className, ...rest }) => {
                     fullWidth
                   >
                     <InputLabel id="demo-simple-select-outlined-label">
-                      검색 필드
+                      카테고리
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
-                      // value={category}
                       defaultValue="name"
                       onChange={handleChangeCategory}
                       label="search"

@@ -9,6 +9,7 @@ export const errorDuringRequest = createAction(
     error
   })
 );
+export const clearRequestError = createAction('request/CLEAR_ERROR');
 
 const initialState = {};
 
@@ -31,6 +32,10 @@ const reducer = handleActions(
       error: {
         [type]: error
       }
+    }),
+    [clearRequestError]: (state, action) => ({
+      ...state,
+      error: null
     })
   },
   initialState

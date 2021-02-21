@@ -47,6 +47,7 @@
     "prefer-const": "off",
     "no-alert": "off",
     "no-shadow": "off",
-    "react/jsx-boolean-value": "off"
+    "react/jsx-boolean-value": "off",
+    "consistent-return": "off"
   }
 }
