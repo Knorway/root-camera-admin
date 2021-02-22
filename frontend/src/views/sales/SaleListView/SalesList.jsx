@@ -18,6 +18,7 @@ import { useRequest } from 'src/utils/useRequest';
 import { GET_SALES } from 'src/modules/sales';
 import Loader from 'src/components/Loader';
 import useSearchQuery from 'src/utils/useSearchQuery';
+import { resetAllSearchQueries } from 'src/modules/searchQuery';
 import { getSales } from '../../../modules/sales';
 import SalesListItem from './SalesListItem';
 
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SalesList = ({ className, customers, ...rest }) => {
+const SalesList = ({ className, ...rest }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -55,6 +56,10 @@ const SalesList = ({ className, customers, ...rest }) => {
   const handlePageChange = (e, newPage) => {
     onChangePage(newPage);
   };
+
+  useEffect(() => {
+    dispatch(resetAllSearchQueries());
+  }, []);
 
   useEffect(() => {
     dispatch(getSales());

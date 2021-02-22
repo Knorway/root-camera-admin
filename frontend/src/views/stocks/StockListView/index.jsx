@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Container, makeStyles } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { clearStack } from 'src/modules/editedStocks';

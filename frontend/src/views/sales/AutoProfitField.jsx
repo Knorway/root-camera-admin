@@ -1,76 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, TextField } from '@material-ui/core';
 import useEditedStocks from 'src/utils/useEditedStocks';
+import { useSelector } from 'react-redux';
 
-const initialState = {
-  purchasedForKRW: 0,
-  internationalShippingCost: 0,
-  shippingCost: 0,
-  extraCost: 0
-};
-
-const AutoTotalCostField = ({ listItem, size, stock }) => {
+const AutoProfitField = ({ listItem, size, stock }) => {
   const { onChange } = useEditedStocks();
-  const [costField, setCostField] = useState(initialState);
-  const [totalCost, setTotalCost] = useState(stock.purchasedForKRW);
+  const [soldFor, setSoldFor] = useState(0);
+  const [profit, setProfit] = useState(0);
+  const totalPurchaseCost = useSelector(
+    ({ editedStocks }) => editedStocks.stack[stock._id]?.totalPurchaseCost
+  );
 
   const inputProps = listItem
     ? {
         style: { fontSize: 14, padding: 12 }
       }
     : {};
+
   const inputLableProps = listItem
     ? {
         style: { lineHeight: 0, fontSize: 14 }
       }
     : {};
 
-  const countTotalCost = () => {
-    const {
-      purchasedForKRW,
-      internationalShippingCost,
-      shippingCost,
-      extraCost
-    } = costField;
-    const price =
-      purchasedForKRW + internationalShippingCost + shippingCost + extraCost;
-    return price;
-  };
-
   const handleCountTotalCount = (e) => {
-    const { name, value } = e.target;
-
     onChange(e, stock._id);
-    setCostField((prev) => ({
-      ...prev,
-      [name]: +value
-    }));
+    setSoldFor(e.target.value);
   };
 
   useEffect(() => {
-    setCostField({
-      purchasedForKRW: stock.purchasedForKRW,
-      internationalShippingCost: stock.internationalShippingCost,
-      shippingCost: stock.shippingCost,
-      extraCost: stock.extraCost
-    });
+    setProfit(stock.profit || 0);
+    setSoldFor(stock.soldFor || 0);
   }, [stock]);
 
   useEffect(() => {
-    setTotalCost(countTotalCost());
-  }, [costField]);
+    setProfit(soldFor - totalPurchaseCost);
+  }, [soldFor, totalPurchaseCost]);
 
   return (
     <>
       <Grid item md={size} xs={size}>
         <TextField
           fullWidth
-          label="구매가격 ₩"
+          label="판매가격"
           type="number"
-          name="purchasedForKRW"
+          name="soldFor"
           onChange={handleCountTotalCount}
           onFocus={(e) => e.target.select()}
-          value={costField.purchasedForKRW}
+          value={soldFor}
           variant="outlined"
           inputProps={inputProps}
           InputLabelProps={inputLableProps}
@@ -79,12 +56,12 @@ const AutoTotalCostField = ({ listItem, size, stock }) => {
       <Grid item md={size} xs={size}>
         <TextField
           fullWidth
-          label="배대지비용"
+          helperText="자동계산필드"
           type="number"
-          name="internationalShippingCost"
-          onChange={handleCountTotalCount}
+          label="45%"
+          name="firstField"
           onFocus={(e) => e.target.select()}
-          value={costField.internationalShippingCost}
+          value={Math.round(profit * 0.45)}
           variant="outlined"
           inputProps={inputProps}
           InputLabelProps={inputLableProps}
@@ -93,12 +70,12 @@ const AutoTotalCostField = ({ listItem, size, stock }) => {
       <Grid item md={size} xs={size}>
         <TextField
           fullWidth
-          label="배송비"
+          helperText="자동계산필드"
           type="number"
-          name="shippingCost"
-          onChange={handleCountTotalCount}
+          label="35%"
+          name="secondField"
           onFocus={(e) => e.target.select()}
-          value={costField.shippingCost}
+          value={Math.round(profit * 0.35)}
           variant="outlined"
           inputProps={inputProps}
           InputLabelProps={inputLableProps}
@@ -107,12 +84,12 @@ const AutoTotalCostField = ({ listItem, size, stock }) => {
       <Grid item md={size} xs={size}>
         <TextField
           fullWidth
-          label="기타 추가 비용"
+          helperText="자동계산필드"
           type="number"
-          name="extraCost"
-          onChange={handleCountTotalCount}
+          label="20%"
+          name="thirdField"
           onFocus={(e) => e.target.select()}
-          value={costField.extraCost}
+          value={Math.round(profit * 0.2)}
           variant="outlined"
           inputProps={inputProps}
           InputLabelProps={inputLableProps}
@@ -123,19 +100,17 @@ const AutoTotalCostField = ({ listItem, size, stock }) => {
           fullWidth
           helperText={!listItem && '자동계산필드'}
           type="number"
-          label="총 구매 비용"
-          name="totalPurchaseCost"
+          label="순이익"
+          name="profit"
           required
-          value={totalCost}
+          value={soldFor && profit}
           variant="outlined"
           inputProps={inputProps}
           InputLabelProps={inputLableProps}
           inputRef={(input) => {
             input &&
               onChange(
-                {
-                  target: { name: 'totalPurchaseCost', value: input.value }
-                },
+                { target: { name: 'profit', value: profit } },
                 stock._id
               );
           }}
@@ -145,9 +120,9 @@ const AutoTotalCostField = ({ listItem, size, stock }) => {
   );
 };
 
-AutoTotalCostField.defaultProps = {
+AutoProfitField.defaultProps = {
   size: 6,
   listItem: false
 };
 
-export default AutoTotalCostField;
+export default AutoProfitField;

@@ -29,16 +29,15 @@ export const getStocks = asyncHandler(async (req, res) => {
 
 export const getStockById = asyncHandler(async (req, res) => {
 	const { id } = req.params;
-	console.log(id);
+	const stock = await Stock.findById(id);
 
-	try {
-		const stock = await Stock.findById(id);
-		res.status(200);
-		res.json(stock);
-	} catch (error) {
+	if (!stock) {
 		res.status(404);
 		throw new Error('존재하지 않는 재고입니다');
 	}
+
+	res.status(200);
+	res.json(stock);
 });
 
 export const createStock = asyncHandler(async (req, res) => {

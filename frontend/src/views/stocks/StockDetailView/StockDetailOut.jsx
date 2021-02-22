@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core';
 import { toDatePickerFormat } from 'src/utils/lib';
 import useEditedStocks from 'src/utils/useEditedStocks';
+import AutoProfitField from 'src/views/sales/AutoProfitField';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -176,7 +177,7 @@ const StockDetailOut = () => {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item md={6} xs={6}>
+              {/* <Grid item md={6} xs={6}>
                 <TextField
                   fullWidth
                   label="판매가격"
@@ -244,7 +245,8 @@ const StockDetailOut = () => {
                   variant="outlined"
                   disabled
                 />
-              </Grid>
+              </Grid> */}
+              <AutoProfitField stock={stock} />
               <Grid item md={6} xs={12}>
                 <TextField
                   id="filled-textarea"

@@ -24,8 +24,8 @@ const StockDetailView = () => {
   const classes = useStyles();
   const { id } = useMatch('/app/stocks/:id').params;
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+
   const {
     loading,
     data: { stock },

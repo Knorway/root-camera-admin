@@ -171,9 +171,9 @@ const StockDetailIn = () => {
                 variant="outlined"
               />
             </Grid>
-            {/* Auto calculate */}
-            <AutoTotalCostField />
-            {/* Auto calculate */}
+            {/* AutoField */}
+            <AutoTotalCostField stock={stock} />
+            {/* AutoField */}
             <Grid item md={6} xs={12}>
               <TextField
                 id="filled-textarea"

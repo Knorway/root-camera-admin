@@ -1,7 +1,7 @@
-import 'react-perfect-scrollbar/dist/css/styles.css';
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'src/mixins/chartjs';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import DashboardView from 'src/views/dashboard/DashboardView';
 import StockListView from 'src/views/stocks/StockListView';
 import SettingsView from 'src/views/settings/SettingsView';
