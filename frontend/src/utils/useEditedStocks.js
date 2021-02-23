@@ -27,7 +27,6 @@ const useEditedStocks = () => {
         stockId,
         editedStock: {
           [name]: value || checked
-          // totalPurchaseCost:
         }
       })
     );

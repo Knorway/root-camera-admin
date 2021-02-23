@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -20,10 +21,10 @@ import {
 import IconButton from '@material-ui/core/IconButton';
 import SearchIconMUI from '@material-ui/icons/Search';
 import { Search as SearchIcon } from 'react-feather';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { getStocks, stackNewStocks } from 'src/modules/stocks';
 import useToolbar from 'src/utils/useToolbar';
+import { toDatePickerFormat } from 'src/utils/lib';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -41,12 +42,12 @@ const Toolbar = ({ className, ...rest }) => {
   const dispatch = useDispatch();
 
   const {
-    input,
     category,
     handleInput,
     handleChangeCategory,
     handleKeydown,
-    handleSave
+    handleSave,
+    handleChangeDate
   } = useToolbar();
 
   const onClick = async () => {
@@ -80,75 +81,107 @@ const Toolbar = ({ className, ...rest }) => {
       <Box mt={3}>
         <Card>
           <CardContent>
-            <Box maxWidth={700}>
-              <Grid container>
-                <Grid item sm={6} md={7} lg={7}>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SvgIcon fontSize="small" color="action">
-                            <SearchIcon />
-                          </SvgIcon>
-                        </InputAdornment>
-                      )
-                    }}
-                    inputRef={inputRef}
-                    placeholder="재고 검색"
-                    variant="outlined"
-                    value={input}
-                    onChange={handleInput}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        handleKeydown(() => {
-                          dispatch(getStocks());
-                        });
-                      }
-                    }}
-                    // autoFocus
-                  />
-                </Grid>
-                <Grid item sm={6} md={3} lg={3} style={{ paddingLeft: 10 }}>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                    fullWidth
-                  >
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      카테고리
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      defaultValue="name"
-                      onChange={handleChangeCategory}
-                      label="search"
-                    >
-                      {/* <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem> */}
-                      <MenuItem value="name">제품명</MenuItem>
-                      <MenuItem value="status">상태</MenuItem>
-                      <MenuItem value="memo_inStock">메모</MenuItem>
-                      <MenuItem value="pin">품번</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item sm={6} md={2} lg={2}>
-                  <Box paddingTop={1} paddingLeft={1}>
-                    <IconButton
-                      // color="primary"
-                      className={classes.iconButton}
-                      aria-label="directions"
-                      onClick={handleKeydown}
-                    >
-                      <SearchIconMUI />
-                    </IconButton>
-                  </Box>
-                </Grid>
+            <Grid container>
+              <Grid item lg={3}>
+                <TextField
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon fontSize="small" color="action">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    )
+                  }}
+                  inputRef={inputRef}
+                  placeholder="재고 검색"
+                  variant="outlined"
+                  // value={input}
+                  onChange={handleInput}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleKeydown(() => {
+                        dispatch(getStocks());
+                      });
+                    }
+                  }}
+                />
               </Grid>
-            </Box>
+              <Grid item style={{ paddingLeft: 10 }} lg={1}>
+                <FormControl
+                  variant="outlined"
+                  className={classes.formControl}
+                  fullWidth
+                >
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    카테고리
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    defaultValue="name"
+                    onChange={handleChangeCategory}
+                    label="search"
+                  >
+                    <MenuItem value="name">제품명</MenuItem>
+                    <MenuItem value="status">상태</MenuItem>
+                    <MenuItem value="memo_inStock">메모</MenuItem>
+                    <MenuItem value="pin">품번</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item style={{ paddingLeft: 15 }}>
+                <TextField
+                  id="date"
+                  label="From"
+                  type="date"
+                  name="dateFrom"
+                  className={classes.textField}
+                  defaultValue="2021-01-01"
+                  InputProps={{
+                    style: { fontSize: 14, paddingTop: 9 }
+                  }}
+                  InputLabelProps={{
+                    style: { lineHeight: 1, fontSize: 14 }
+                  }}
+                  style={{ marginRight: 15 }}
+                  onChange={handleChangeDate}
+                />
+                <TextField
+                  id="date"
+                  label="To"
+                  type="date"
+                  name="dateTo"
+                  className={classes.textField}
+                  defaultValue={toDatePickerFormat(new Date(), {
+                    new: true
+                  })}
+                  InputProps={{
+                    style: { fontSize: 14, paddingTop: 9 }
+                  }}
+                  InputLabelProps={{
+                    style: { lineHeight: 1, fontSize: 14 }
+                  }}
+                  onChange={handleChangeDate}
+                />
+              </Grid>
+              <Grid item xs>
+                <Box paddingTop={1} paddingLeft={2}>
+                  <IconButton
+                    className={classes.iconButton}
+                    aria-label="directions"
+                    onClick={() => {
+                      handleKeydown(() => {
+                        dispatch(getStocks());
+                      });
+                    }}
+                  >
+                    <SearchIconMUI />
+                  </IconButton>
+                </Box>
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Box>
@@ -160,4 +193,4 @@ Toolbar.propTypes = {
   className: PropTypes.string
 };
 
-export default Toolbar;
+export default React.memo(Toolbar);

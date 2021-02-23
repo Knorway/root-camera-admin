@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState, memo } from 'react';
 import useEditedStocks from './useEditedStocks';
 import useSearchQuery from './useSearchQuery';
 
@@ -8,28 +8,36 @@ const useToolbar = () => {
   const { onSave } = useEditedStocks();
   const { onChangeKeyword, onResetKeyword, onChangePage } = useSearchQuery();
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     if (window.confirm('변경사항들이 일괄 변경됩니다. 저장하시겠습니까?')) {
       onSave();
       window.location.reload();
     }
-  };
+  }, []);
 
-  const handleChangeCategory = (e) => {
+  const handleChangeCategory = useCallback((e) => {
     setCategory(e.target.value);
     setInput('');
     onResetKeyword();
-  };
+  }, []);
 
-  const handleInput = (e) => {
-    const { value } = e.target;
-    onChangeKeyword({ [category]: value });
-    setInput(value);
-  };
+  const handleInput = useCallback(
+    (e) => {
+      const { value } = e.target;
+      onChangeKeyword({ [category]: value });
+      setInput(value);
+    },
+    [category]
+  );
 
-  const handleKeydown = (callback) => {
+  const handleKeydown = useCallback((callback) => {
     callback();
     onChangePage(0);
+  }, []);
+
+  const handleChangeDate = (e) => {
+    const { name, value } = e.target;
+    onChangeKeyword({ [name]: value });
   };
 
   return {
@@ -38,7 +46,8 @@ const useToolbar = () => {
     handleSave,
     handleChangeCategory,
     handleInput,
-    handleKeydown
+    handleKeydown,
+    handleChangeDate
   };
 };
 

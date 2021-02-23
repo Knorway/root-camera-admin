@@ -177,76 +177,9 @@ const StockDetailOut = () => {
                   variant="outlined"
                 />
               </Grid>
-              {/* <Grid item md={6} xs={6}>
-                <TextField
-                  fullWidth
-                  label="판매가격"
-                  type="number"
-                  name="soldFor"
-                  onChange={handleChange}
-                  required
-                  defaultValue={stock.soldFor}
-                  variant="outlined"
-                />
-              </Grid>
-
-              <Grid item md={6} xs={6}>
-                <TextField
-                  fullWidth
-                  helperText="자동계산필드"
-                  type="number"
-                  label="45%"
-                  name="temp"
-                  onChange={handleChange}
-                  required
-                  defaultValue={stock.temp}
-                  variant="outlined"
-                  disabled
-                />
-              </Grid>
-              <Grid item md={6} xs={6}>
-                <TextField
-                  fullWidth
-                  helperText="자동계산필드"
-                  type="number"
-                  label="35%"
-                  name="temp"
-                  onChange={handleChange}
-                  required
-                  defaultValue={stock.temp}
-                  variant="outlined"
-                  disabled
-                />
-              </Grid>
-              <Grid item md={6} xs={6}>
-                <TextField
-                  fullWidth
-                  helperText="자동계산필드"
-                  type="number"
-                  label="20%"
-                  name="temp"
-                  onChange={handleChange}
-                  required
-                  defaultValue={stock.temp}
-                  variant="outlined"
-                  disabled
-                />
-              </Grid>
-              <Grid item md={6} xs={6}>
-                <TextField
-                  fullWidth
-                  helperText="자동계산필드"
-                  type="number"
-                  label="순이익"
-                  name="profit"
-                  onChange={handleChange}
-                  required
-                  defaultValue={stock.profit}
-                  variant="outlined"
-                  disabled
-                />
-              </Grid> */}
+              {/* AutoField */}
               <AutoProfitField stock={stock} />
+              {/* AutoField */}
               <Grid item md={6} xs={12}>
                 <TextField
                   id="filled-textarea"

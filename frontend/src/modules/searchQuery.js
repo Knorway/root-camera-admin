@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
+import { toDatePickerFormat } from 'src/utils/lib';
 
 export const changePage = createAction('searchQuery/CHANGE_PAGE');
 export const changeLimit = createAction('searchQuery/CHANGE_LIMIT');
@@ -11,8 +12,12 @@ export const resetAllSearchQueries = createAction(
 
 const initialState = {
   pagination: { page: 0, limit: 100 },
-  keyword: {},
-  date: []
+  keyword: {
+    dateFrom: '2021-01-01',
+    dateTo: toDatePickerFormat(new Date(), {
+      new: true
+    })
+  }
 };
 
 const reducer = handleActions(
@@ -34,7 +39,7 @@ const reducer = handleActions(
     [chnageKeyword]: (state, { payload }) => ({
       ...state,
       keyword: {
-        // ...state.keyword,
+        ...state.keyword,
         ...payload
       }
     }),

@@ -1,4 +1,4 @@
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   changeLimit,
   changePage,
@@ -8,10 +8,7 @@ import {
 
 const useSearchQuery = () => {
   const dispatch = useDispatch();
-  const pagination = useSelector(
-    (state) => state.searchQuery.pagination,
-    shallowEqual
-  );
+  const pagination = useSelector((state) => state.searchQuery.pagination);
 
   const onChangePage = (value) => dispatch(changePage(value));
   const onChangeLimit = (value) => dispatch(changeLimit(value));

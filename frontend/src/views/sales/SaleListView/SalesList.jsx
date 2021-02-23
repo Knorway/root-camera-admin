@@ -90,7 +90,10 @@ const SalesList = ({ className, ...rest }) => {
                   <TableCell>품번</TableCell>
                   <TableCell>일련번호</TableCell>
                   <TableCell>제품명</TableCell>
+                  <TableCell>구매자</TableCell>
+                  <TableCell>연락처</TableCell>
                   <TableCell>판매가격</TableCell>
+                  <TableCell>순이익</TableCell>
                   <TableCell>판매날짜</TableCell>
                 </TableRow>
               </TableHead>

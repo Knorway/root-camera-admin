@@ -4,9 +4,10 @@ import useEditedStocks from 'src/utils/useEditedStocks';
 import { useSelector } from 'react-redux';
 
 const AutoProfitField = ({ listItem, size, stock }) => {
-  const { onChange } = useEditedStocks();
   const [soldFor, setSoldFor] = useState(0);
   const [profit, setProfit] = useState(0);
+
+  const { onChange } = useEditedStocks();
   const totalPurchaseCost = useSelector(
     ({ editedStocks }) => editedStocks.stack[stock._id]?.totalPurchaseCost
   );
@@ -53,48 +54,52 @@ const AutoProfitField = ({ listItem, size, stock }) => {
           InputLabelProps={inputLableProps}
         />
       </Grid>
-      <Grid item md={size} xs={size}>
-        <TextField
-          fullWidth
-          helperText="자동계산필드"
-          type="number"
-          label="45%"
-          name="firstField"
-          onFocus={(e) => e.target.select()}
-          value={Math.round(profit * 0.45)}
-          variant="outlined"
-          inputProps={inputProps}
-          InputLabelProps={inputLableProps}
-        />
-      </Grid>
-      <Grid item md={size} xs={size}>
-        <TextField
-          fullWidth
-          helperText="자동계산필드"
-          type="number"
-          label="35%"
-          name="secondField"
-          onFocus={(e) => e.target.select()}
-          value={Math.round(profit * 0.35)}
-          variant="outlined"
-          inputProps={inputProps}
-          InputLabelProps={inputLableProps}
-        />
-      </Grid>
-      <Grid item md={size} xs={size}>
-        <TextField
-          fullWidth
-          helperText="자동계산필드"
-          type="number"
-          label="20%"
-          name="thirdField"
-          onFocus={(e) => e.target.select()}
-          value={Math.round(profit * 0.2)}
-          variant="outlined"
-          inputProps={inputProps}
-          InputLabelProps={inputLableProps}
-        />
-      </Grid>
+      {!listItem && (
+        <>
+          <Grid item md={size} xs={size}>
+            <TextField
+              fullWidth
+              helperText="자동계산필드"
+              type="number"
+              label="45%"
+              name="firstField"
+              onFocus={(e) => e.target.select()}
+              value={soldFor && Math.round(profit * 0.45)}
+              variant="outlined"
+              inputProps={inputProps}
+              InputLabelProps={inputLableProps}
+            />
+          </Grid>
+          <Grid item md={size} xs={size}>
+            <TextField
+              fullWidth
+              helperText="자동계산필드"
+              type="number"
+              label="35%"
+              name="secondField"
+              onFocus={(e) => e.target.select()}
+              value={soldFor && Math.round(profit * 0.35)}
+              variant="outlined"
+              inputProps={inputProps}
+              InputLabelProps={inputLableProps}
+            />
+          </Grid>
+          <Grid item md={size} xs={size}>
+            <TextField
+              fullWidth
+              helperText="자동계산필드"
+              type="number"
+              label="20%"
+              name="thirdField"
+              onFocus={(e) => e.target.select()}
+              value={soldFor && Math.round(profit * 0.2)}
+              variant="outlined"
+              inputProps={inputProps}
+              InputLabelProps={inputLableProps}
+            />
+          </Grid>
+        </>
+      )}
       <Grid item md={size} xs={size}>
         <TextField
           fullWidth

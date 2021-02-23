@@ -49,8 +49,6 @@ const StockListItem = ({ stock }) => {
     }
   };
 
-  console.log('stocksListItem');
-
   return (
     <>
       <TableRow
@@ -248,10 +246,8 @@ const StockListItem = ({ stock }) => {
                   <TextField
                     fullWidth
                     label="해당없음"
-                    // name="currentlyAt"
                     onChange={handleChange}
                     required
-                    // defaultValue={stock.currentlyAt}
                     variant="outlined"
                     inputProps={{
                       style: { fontSize: 14, padding: 12 }
@@ -265,7 +261,6 @@ const StockListItem = ({ stock }) => {
                 <Grid item md={2} xs={2}>
                   <TextField
                     fullWidth
-                    // helperText="Please specify the first name"
                     label="구매가격 $"
                     name="purchasedForUSD"
                     onChange={handleChange}

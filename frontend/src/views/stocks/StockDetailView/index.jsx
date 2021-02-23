@@ -35,7 +35,6 @@ const StockDetailView = () => {
 
   useEffect(() => {
     dispatch(getStockById({ query: false, params: id }));
-
     return () => {
       dispatch(clearRequestError());
     };
