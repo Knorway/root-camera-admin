@@ -19,7 +19,8 @@ import AutoTotalCostField from '../AutoTotalCostField';
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
-      borderBottom: 'unset'
+      borderBottom: 'unset',
+      padding: 6
     }
   }
 });
@@ -201,7 +202,6 @@ const StockListItem = ({ stock }) => {
                     }}
                   />
                 </Grid>
-
                 <Grid item md={2} xs={2}>
                   <TextField
                     fullWidth

@@ -6,7 +6,7 @@ const useToolbar = () => {
   const [category, setCategory] = useState('name');
   const [input, setInput] = useState('');
   const { onSave } = useEditedStocks();
-  const { onChangeKeyword, onResetKeyword, onChangePage } = useSearchQuery();
+  const { onChangeKeyword, onChangePage, onResetKeyword } = useSearchQuery();
 
   const handleSave = useCallback(() => {
     if (window.confirm('변경사항들이 일괄 변경됩니다. 저장하시겠습니까?')) {

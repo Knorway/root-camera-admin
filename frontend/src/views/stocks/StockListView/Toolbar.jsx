@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -15,7 +15,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  FormHelperText,
   Grid
 } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
@@ -43,6 +42,7 @@ const Toolbar = ({ className, ...rest }) => {
 
   const {
     category,
+    input,
     handleInput,
     handleChangeCategory,
     handleKeydown,
@@ -97,7 +97,7 @@ const Toolbar = ({ className, ...rest }) => {
                   inputRef={inputRef}
                   placeholder="재고 검색"
                   variant="outlined"
-                  // value={input}
+                  value={input}
                   onChange={handleInput}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
@@ -126,8 +126,9 @@ const Toolbar = ({ className, ...rest }) => {
                   >
                     <MenuItem value="name">제품명</MenuItem>
                     <MenuItem value="status">상태</MenuItem>
-                    <MenuItem value="memo_inStock">메모</MenuItem>
                     <MenuItem value="pin">품번</MenuItem>
+                    <MenuItem value="memo_inStock">메모</MenuItem>
+                    <MenuItem value="meta_inStock">비고</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

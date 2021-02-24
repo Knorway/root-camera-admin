@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -120,8 +120,11 @@ const Toolbar = ({ className, ...rest }) => {
                     label="search"
                   >
                     <MenuItem value="name">제품명</MenuItem>
-                    <MenuItem value="memo_sold">메모</MenuItem>
                     <MenuItem value="pin">품번</MenuItem>
+                    <MenuItem value="buyer_name">구매자</MenuItem>
+                    <MenuItem value="buyer_phoneNumber">연락처</MenuItem>
+                    <MenuItem value="memo_sold">메모</MenuItem>
+                    <MenuItem value="meta_sold">비고</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -167,7 +170,7 @@ const Toolbar = ({ className, ...rest }) => {
                     aria-label="directions"
                     onClick={() => {
                       handleKeydown(() => {
-                        dispatch(getStocks());
+                        dispatch(getSales());
                       });
                     }}
                   >

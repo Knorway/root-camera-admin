@@ -52,7 +52,10 @@ const reducer = handleActions(
     }),
     [resetKeyword]: (state, action) => ({
       ...state,
-      keyword: {}
+      keyword: {
+        dateFrom: state.keyword.dateFrom,
+        dateTo: state.keyword.dateTo
+      }
     }),
     [resetAllSearchQueries]: (state, action) => initialState
   },

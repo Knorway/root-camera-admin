@@ -24,7 +24,8 @@ import AutoProfitField from '../AutoProfitField';
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
-      borderBottom: 'unset'
+      borderBottom: 'unset',
+      padding: 6
     }
   }
 });
@@ -123,168 +124,8 @@ const SalesListItem = ({ stock }) => {
                     }}
                   />
                 </Grid>
-                {/* <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    type="date"
-                    label="판매 날짜"
-                    name="soldAt"
-                    onChange={handleChange}
-                    required
-                    // focused
-                    defaultValue={
-                      toDatePickerFormat(stock.soldAt) ||
-                      toDatePickerFormat(new Date(), { new: true })
-                    }
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid> */}
-                {/* <Grid item md={2} xs={2}>
-                  <FormControl
-                    component="fieldset"
-                    className={classes.formControl}
-                  >
-                    <FormLabel component="legend">판매 루트</FormLabel>
-                    <FormGroup row>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            defaultChecked={stock.soldFrom_site}
-                            onChange={handleChange}
-                            name="soldFrom_site"
-                          />
-                        }
-                        label="공홈"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            defaultChecked={stock.soldFrom_insta}
-                            onChange={handleChange}
-                            name="soldFrom_insta"
-                          />
-                        }
-                        label="인스타"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            defaultChecked={stock.soldFrom_jungna}
-                            onChange={handleChange}
-                            name="soldFrom_jungna"
-                          />
-                        }
-                        label="중고나라"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            defaultChecked={stock.soldFrom_bungae}
-                            onChange={handleChange}
-                            name="soldFrom_bungae"
-                          />
-                        }
-                        label="번개장터"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            defaultChecked={stock.soldFrom_register}
-                            onChange={handleChange}
-                            name="soldFrom_register"
-                          />
-                        }
-                        label="등록기"
-                      />
-                    </FormGroup>
-                  </FormControl>
-                </Grid> */}
-                {/* <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="판매 루트 상세"
-                    name="soldFrom_method"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.soldFrom_method}
-                    variant="outlined"
-                    inputProps={{
-                      style: { fontSize: 14, padding: 12 }
-                    }}
-                    InputLabelProps={{
-                      style: { lineHeight: 0, fontSize: 14 }
-                    }}
-                  />
-                </Grid> */}
-                {/* <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    label="판매가격"
-                    name="soldFor"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.soldFor}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    helperText="자동계산필드"
-                    label="45%"
-                    name="temp"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.temp}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    helperText="자동계산필드"
-                    label="35%"
-                    name="temp"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.temp}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    helperText="자동계산필드"
-                    label="20%"
-                    name="temp"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.temp}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item md={2} xs={2}>
-                  <TextField
-                    fullWidth
-                    helperText="자동계산필드"
-                    label="순이익"
-                    name="profit"
-                    onChange={handleChange}
-                    required
-                    defaultValue={stock.profit}
-                    variant="outlined"
-                  />
-                </Grid> */}
-
                 {/* AutoField */}
                 <AutoProfitField stock={stock} size={2} listItem />
-
                 {/* AutoField */}
                 <Grid item md={2} xs={2}>
                   <TextField

@@ -13,7 +13,7 @@ const useSearchQuery = () => {
   const onChangePage = (value) => dispatch(changePage(value));
   const onChangeLimit = (value) => dispatch(changeLimit(value));
   const onChangeKeyword = (value) => dispatch(chnageKeyword(value));
-  const onResetKeyword = (value) => dispatch(resetKeyword(value));
+  const onResetKeyword = () => dispatch(resetKeyword());
 
   return {
     pagination,

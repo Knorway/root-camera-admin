@@ -3,8 +3,9 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import mongoDB from './config/db.js';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
-import stocksRoutes from './routes/stocksRoutes.js';
-import salesRoutes from './routes/salesRoutes.js';
+import stockRoutes from './routes/stockRoutes.js';
+import saleRoutes from './routes/saleRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 const app = express();
 
@@ -18,8 +19,9 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/stocks', stocksRoutes);
-app.use('/api/sales', salesRoutes);
+app.use('/api/stocks', stockRoutes);
+app.use('/api/sales', saleRoutes);
+app.use('/api/users', userRouter);
 
 // ------------error handler------------ #
 app.use(notFound);
