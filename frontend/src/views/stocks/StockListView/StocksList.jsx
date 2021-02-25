@@ -42,7 +42,8 @@ const StocksList = ({ className, ...rest }) => {
   } = useSearchQuery();
   const {
     loading,
-    data: { stocks, count }
+    data: { stocks, count },
+    error
   } = useRequest(GET_STOCKS, 'stocks');
 
   const handleLimitChange = (e) => {

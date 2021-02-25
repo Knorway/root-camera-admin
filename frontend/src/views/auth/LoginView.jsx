@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -15,6 +16,9 @@ import {
 import FacebookIcon from 'src/icons/Facebook';
 import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRequest } from 'src/utils/useRequest';
+import { LOGIN_AUTH, loginUser } from 'src/modules/auth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +32,19 @@ const useStyles = makeStyles((theme) => ({
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { error } = useRequest(LOGIN_AUTH, 'auth');
+
+  const onLogin = (form, { setSubmitting }) => {
+    dispatch(
+      loginUser({ query: false, params: form }, (user) => {
+        localStorage.setItem('auth', JSON.stringify(user));
+        navigate('/app/dashboard', { replace: true });
+      })
+    );
+    setSubmitting(false);
+  };
 
   return (
     <Page className={classes.root} title="로그인">
@@ -52,9 +69,7 @@ const LoginView = () => {
                 .max(255)
                 .required('필수 입력항목입니다')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
+            onSubmit={onLogin}
           >
             {({
               errors,
@@ -161,6 +176,16 @@ const LoginView = () => {
                     로그인
                   </Button>
                 </Box>
+                {error && (
+                  <Typography
+                    color="error"
+                    style={{
+                      marginTop: 10
+                    }}
+                  >
+                    {error.response.data.message}
+                  </Typography>
+                )}
                 {/* <Typography color="textSecondary" variant="body1">
                   Don&apos;t have an account?
                   <Link component={RouterLink} to="/register" variant="h6">

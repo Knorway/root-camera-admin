@@ -6,6 +6,8 @@ export const protect = asyncHandler(async (req, res, next) => {
 	const authHeader = req.headers.authorization;
 	let token;
 
+	console.log(req.headers);
+
 	if (authHeader && authHeader.startsWith('Bearer')) {
 		try {
 			token = authHeader.split(' ')[1];
@@ -14,8 +16,11 @@ export const protect = asyncHandler(async (req, res, next) => {
 
 			next();
 		} catch {
-			res.status(404);
+			res.status(401);
 			throw new Error('접근 권한이 없는 요청입니다');
 		}
+	} else {
+		res.status(401);
+		throw new Error('접근 권한이 없는 요청입니다');
 	}
 });

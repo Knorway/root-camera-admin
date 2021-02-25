@@ -21,9 +21,15 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIconMUI from '@material-ui/icons/Search';
 import { Search as SearchIcon } from 'react-feather';
 import { useDispatch } from 'react-redux';
-import { getStocks, stackNewStocks } from 'src/modules/stocks';
+import {
+  getStocks,
+  stackNewStocks,
+  STACK_STOCKS,
+  addNewStock
+} from 'src/modules/stocks';
 import useToolbar from 'src/utils/useToolbar';
 import { toDatePickerFormat } from 'src/utils/lib';
+import { useRequest } from 'src/utils/useRequest';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -51,8 +57,9 @@ const Toolbar = ({ className, ...rest }) => {
   } = useToolbar();
 
   const onClick = async () => {
-    const { data } = await axios.post('/api/stocks');
-    dispatch(stackNewStocks(data));
+    // const { data } = await axios.post('/api/stocks');
+    // dispatch(stackNewStocks(data));
+    addNewStock();
   };
 
   useEffect(() => {

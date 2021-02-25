@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -15,6 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from 'src/components/Logo';
+import useAuth from 'src/utils/useAuth';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -24,27 +25,22 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TopBar = ({
-  className,
-  onMobileNavOpen,
-  ...rest
-}) => {
+const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   const classes = useStyles();
-  const [notifications] = useState([]);
+  const navigate = useNavigate();
+  // const [notifications] = useState([]);
+
+  const { onLogout } = useAuth();
 
   return (
-    <AppBar
-      className={clsx(classes.root, className)}
-      elevation={0}
-      {...rest}
-    >
+    <AppBar className={clsx(classes.root, className)} elevation={0} {...rest}>
       <Toolbar>
         <RouterLink to="/">
           <Logo />
         </RouterLink>
         <Box flexGrow={1} />
         <Hidden mdDown>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
               color="primary"
@@ -52,16 +48,19 @@ const TopBar = ({
             >
               <NotificationsIcon />
             </Badge>
-          </IconButton>
-          <IconButton color="inherit">
+          </IconButton> */}
+          <IconButton
+            color="inherit"
+            onClick={() => {
+              onLogout();
+              navigate('/login');
+            }}
+          >
             <InputIcon />
           </IconButton>
         </Hidden>
         <Hidden lgUp>
-          <IconButton
-            color="inherit"
-            onClick={onMobileNavOpen}
-          >
+          <IconButton color="inherit" onClick={onMobileNavOpen}>
             <MenuIcon />
           </IconButton>
         </Hidden>

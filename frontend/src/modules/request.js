@@ -9,6 +9,7 @@ export const errorDuringRequest = createAction(
     error
   })
 );
+export const clearRequest = createAction('request/CLREA_ALL');
 export const clearRequestError = createAction('request/CLEAR_ERROR');
 
 const initialState = {};
@@ -19,6 +20,9 @@ const reducer = handleActions(
       ...state,
       loading: {
         [type]: true
+      },
+      error: {
+        [type]: null
       }
     }),
     [finishLoading]: (state, { payload: type }) => ({
@@ -36,7 +40,8 @@ const reducer = handleActions(
     [clearRequestError]: (state, action) => ({
       ...state,
       error: null
-    })
+    }),
+    [clearRequest]: () => initialState
   },
   initialState
 );

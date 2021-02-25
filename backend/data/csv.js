@@ -71,13 +71,13 @@ const filter = (stock) => {
 	return filtered;
 };
 
-export const importCsv = (path, callback) => {
+export const importCsv = (path, importFn) => {
 	const result = [];
 
 	fs.createReadStream(path)
 		.pipe(csv({}))
 		.on('data', (data) => result.push(filter(data)))
 		.on('end', () => {
-			callback(result);
+			importFn(result);
 		});
 };

@@ -7,6 +7,7 @@ import stock from './stock';
 import editedStocks from './editedStocks';
 import sales from './sales';
 import searchQuery from './searchQuery';
+import auth from './auth';
 
 const rootReducer = combineReducers({
   request,
@@ -14,11 +15,15 @@ const rootReducer = combineReducers({
   stock,
   sales,
   editedStocks,
-  searchQuery
+  searchQuery,
+  auth
 });
 
 const store = createStore(
   rootReducer,
+  {
+    auth: JSON.parse(localStorage.getItem('auth') || null)
+  },
   composeWithDevTools(applyMiddleware(Thunk))
 );
 

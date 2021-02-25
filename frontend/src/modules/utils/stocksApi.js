@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getStocks = async (query) => {
+const getStocks = async (query, config) => {
   let url = '/api/stocks?';
 
   Object.values(query).forEach((each) => {
@@ -9,13 +9,18 @@ const getStocks = async (query) => {
     });
   });
 
-  const response = await axios.get(url);
+  const response = await axios.get(url, config);
   return response;
 };
 
-const getStockById = async (id) => {
-  const response = await axios.get(`/api/stocks/${id}`);
+const getStockById = async (id, config) => {
+  const response = await axios.get(`/api/stocks/${id}`, config);
   return response;
 };
 
-export { getStocks, getStockById };
+const createStock = async () => {
+  const response = await axios.post('/api/stocks');
+  return response;
+};
+
+export { getStocks, getStockById, createStock };

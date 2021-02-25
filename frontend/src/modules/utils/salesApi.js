@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getSales = async (query) => {
+const getSales = async (query, config) => {
   let url = '/api/sales?';
 
   Object.values(query).forEach((each) => {
@@ -9,7 +9,7 @@ const getSales = async (query) => {
     });
   });
 
-  const response = await axios.get(url);
+  const response = await axios.get(url, config);
   return response;
 };
 

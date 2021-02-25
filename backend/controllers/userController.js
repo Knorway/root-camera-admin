@@ -4,9 +4,9 @@ import User from '../model/userModel.js';
 
 export const registerUser = asyncHandler(async (req, res) => {
 	const { name, email, password } = req.body;
-	const existUser = await User.findOne({ email });
+	const userExists = await User.findOne({ email });
 
-	if (existUser) {
+	if (userExists) {
 		res.status(400);
 		throw new Error('이미 존재하는 유저입니다');
 	}
@@ -18,7 +18,6 @@ export const registerUser = asyncHandler(async (req, res) => {
 	});
 
 	if (user) {
-		console.log(user);
 		res.status(201);
 		res.json({
 			name: user.name,
@@ -50,6 +49,6 @@ export const loginUser = asyncHandler(async (req, res) => {
 	}
 });
 
-export const authUser = asyncHandler(async (req, res) => {
-	res.json(req.user);
+export const logoutUser = asyncHandler(async (req, res) => {
+	//
 });
