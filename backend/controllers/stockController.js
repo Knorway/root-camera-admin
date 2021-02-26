@@ -14,8 +14,6 @@ export const getStocks = asyncHandler(async (req, res) => {
 		// e[1] && (filter[e[0]] = { $regex: e[1], $options: 'i' });
 	});
 
-	console.log(filter);
-
 	const stocks = await Stock.find(filter)
 		.limit(+limit)
 		.skip(+limit * (pageNumber - 1))
@@ -68,7 +66,7 @@ export const deleteStock = asyncHandler(async (req, res) => {
 
 	if (!stock) {
 		res.status(404);
-		throw new Error('재고를 삭제하는 데 실패했습니다');
+		throw new Error('존재하지 않는 재고입니다');
 	}
 
 	stock.remove();

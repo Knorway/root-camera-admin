@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 import clsx from 'clsx';
 import {
   Box,
@@ -12,6 +14,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { toDatePickerFormat } from 'src/utils/lib';
+import { useNavigate } from 'react-router-dom';
+import useCreateStock from 'src/utils/useCreateStock';
 import useEditedStocks from 'src/utils/useEditedStocks';
 import AutoTotalCostField from '../AutoTotalCostField';
 
@@ -21,10 +25,22 @@ const useStyles = makeStyles(() => ({
 
 const StockDetailIn = () => {
   const classes = useStyles();
-  const { stock, onChange, onSave, onDelete } = useEditedStocks();
+  const navigate = useNavigate();
+  const { stock, onChange } = useEditedStocks();
+  const { onSave } = useCreateStock();
+  const token = useSelector((state) => state.auth?.token);
 
   const handleChange = (e) => {
     onChange(e, stock._id);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('변화는 되돌릴 수 없습니다. 정말 삭제하시겠습니까?')) {
+      await axios.delete(`/api/stocks/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      navigate(-1);
+    }
   };
 
   return (
@@ -200,7 +216,7 @@ const StockDetailIn = () => {
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="space-between" p={2}>
-          <Button variant="contained" onClick={onDelete(stock._id)}>
+          <Button variant="contained" onClick={() => handleDelete(stock._id)}>
             삭제
           </Button>
           <Button color="primary" variant="contained" onClick={onSave}>

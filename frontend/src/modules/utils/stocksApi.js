@@ -13,14 +13,4 @@ const getStocks = async (query, config) => {
   return response;
 };
 
-const getStockById = async (id, config) => {
-  const response = await axios.get(`/api/stocks/${id}`, config);
-  return response;
-};
-
-const createStock = async () => {
-  const response = await axios.post('/api/stocks');
-  return response;
-};
-
-export { getStocks, getStockById, createStock };
+export { getStocks };

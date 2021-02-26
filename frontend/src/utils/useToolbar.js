@@ -1,11 +1,11 @@
 import { useCallback, useState, memo } from 'react';
-import useEditedStocks from './useEditedStocks';
+import useCreateStock from './useCreateStock';
 import useSearchQuery from './useSearchQuery';
 
 const useToolbar = () => {
   const [category, setCategory] = useState('name');
   const [input, setInput] = useState('');
-  const { onSave } = useEditedStocks();
+  const { onSave } = useCreateStock();
   const { onChangeKeyword, onChangePage, onResetKeyword } = useSearchQuery();
 
   const handleSave = useCallback(() => {

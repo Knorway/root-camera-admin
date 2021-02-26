@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'src/mixins/chartjs';
 import {

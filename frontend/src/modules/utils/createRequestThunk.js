@@ -1,6 +1,6 @@
 import { errorDuringRequest, finishLoading, startLoading } from '../request';
 
-export const createRequestThunk = (type, request) => {
+export const createRequestThunk = (type, requestFn) => {
   const SUCCESS = `${type}_SUCCESS`;
 
   return (
@@ -24,7 +24,7 @@ export const createRequestThunk = (type, request) => {
     dispatch(startLoading(type));
 
     try {
-      const response = await request(data, config);
+      const response = await requestFn(data, config);
       dispatch({ type: SUCCESS, payload: response.data });
 
       if (callback) {

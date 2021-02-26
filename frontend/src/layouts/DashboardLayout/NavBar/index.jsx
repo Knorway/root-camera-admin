@@ -24,13 +24,8 @@ import {
   Camera as CameraIcon,
   CameraOff as CameraOffIcon
 } from 'react-feather';
+import useAuth from 'src/utils/useAuth';
 import NavItem from './NavItem';
-
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
-};
 
 const items = [
   {
@@ -68,12 +63,16 @@ const useStyles = makeStyles(() => ({
     cursor: 'pointer',
     width: 64,
     height: 64
+  },
+  name: {
+    paddingTop: 8
   }
 }));
 
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -88,14 +87,15 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src={user.avatar}
+          // src={user.avatar}
           to="/app/account"
         />
         <Typography className={classes.name} color="textPrimary" variant="h5">
-          {user.name}
+          {user?.name}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.jobTitle}
+          {/* {user.jobTitle} */}
+          관리자
         </Typography>
       </Box>
       <Divider />

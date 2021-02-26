@@ -48,7 +48,3 @@ export const loginUser = asyncHandler(async (req, res) => {
 		throw new Error('존재하지 않거나 올바르지 않은 정보입니다');
 	}
 });
-
-export const logoutUser = asyncHandler(async (req, res) => {
-	//
-});

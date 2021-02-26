@@ -4,24 +4,22 @@ import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
   const [status, setStatus] = useState(200);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const authError = useSelector((state) => state.request.error, shallowEqual);
   const user = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  console.log(user);
-
-  const onLogout = useCallback(() => {
+  const onLogout = () => {
+    dispatch({ type: 'request/CLREA_ALL' });
     dispatch({ type: 'auth/RESET' });
-    dispatch({ type: 'request/CLEAR_ERROR' });
-    localStorage.removeItem('auth');
     setStatus(200);
-  }, [status]);
+    localStorage.removeItem('auth');
+  };
 
   const checkAuth = useCallback(() => {
     if (status === 401 || !user) {
       onLogout();
-      navigate('/login');
+      navigate('/login', { replace: true });
     }
   }, [status, user]);
 
@@ -29,8 +27,8 @@ const useAuth = () => {
     if (authError && Object.values(authError)[0]?.response.status === 401) {
       setStatus(401);
     }
-  }, [authError]);
-  return { user, onLogout, checkAuth };
+  }, []);
+  return { user, status, onLogout, checkAuth };
 };
 
 export default useAuth;

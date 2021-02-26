@@ -21,6 +21,8 @@ import {
 import { toDatePickerFormat } from 'src/utils/lib';
 import useEditedStocks from 'src/utils/useEditedStocks';
 import AutoProfitField from 'src/views/sales/AutoProfitField';
+import useCreateStock from 'src/utils/useCreateStock';
+import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -28,7 +30,8 @@ const useStyles = makeStyles(() => ({
 
 const StockDetailOut = () => {
   const classes = useStyles();
-  const { stock, onChange, onSave } = useEditedStocks();
+  const { stock, onChange } = useEditedStocks();
+  const { onSave } = useCreateStock();
   const [toggleInStock, setToggleInStock] = useState(stock.inStock);
 
   const onToggle = (e) => {
