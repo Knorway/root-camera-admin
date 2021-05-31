@@ -1,23 +1,17 @@
 import React, { useEffect } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import 'src/mixins/chartjs';
-import {
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-  useNavigate
-} from 'react-router-dom';
 import DashboardView from 'src/views/dashboard/DashboardView';
-import StockListView from 'src/views/stocks/StockListView';
 import SettingsView from 'src/views/settings/SettingsView';
+import StockListView from 'src/views/stocks/StockListView';
 import DashboardLayout from './layouts/DashboardLayout';
-import StockDetailView from './views/stocks/StockDetailView';
-import SaleListView from './views/sales/SaleListView';
 import MainLayout from './layouts/MainLayout';
+import useAuth from './utils/useAuth';
 import LoginView from './views/auth/LoginView';
 import NotFoundView from './views/errors/NotFoundView';
-import useAuth from './utils/useAuth';
+import SaleListView from './views/sales/SaleListView';
+import StockDetailView from './views/stocks/StockDetailView';
 
 const App = () => {
   const location = useLocation();

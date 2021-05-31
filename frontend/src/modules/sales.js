@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { createRequestThunk } from './utils/createRequestThunk';
 import * as api from './utils/salesApi';
 

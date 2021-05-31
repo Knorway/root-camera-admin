@@ -178,7 +178,7 @@ const StockDetailIn = () => {
             <Grid item md={6} xs={6}>
               <TextField
                 fullWidth
-                label="구매가격 $"
+                label="구매가격 USD"
                 type="number"
                 name="purchasedForUSD"
                 onChange={handleChange}

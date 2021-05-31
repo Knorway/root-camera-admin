@@ -11,7 +11,6 @@ export const getStocks = asyncHandler(async (req, res) => {
 		if (e[0] === 'dateFrom') return (filter.stockedAt['$gte'] = e[1]);
 		if (e[0] === 'dateTo') return (filter.stockedAt['$lte'] = `${e[1]}T23:59:59Z`);
 		if (e[1]) return (filter[e[0]] = { $regex: e[1], $options: 'i' });
-		// e[1] && (filter[e[0]] = { $regex: e[1], $options: 'i' });
 	});
 
 	const stocks = await Stock.find(filter)
@@ -82,7 +81,7 @@ export const editStocks = asyncHandler(async (req, res) => {
 			stock._id,
 			{
 				...stock,
-				status: stock.status || '입고대기',
+				status: stock.status || '재고있음',
 				stockedAt: isToday(stock.stockedAt) ? formatToday() : stock.stockedAt,
 				soldAt: !stock.inStock
 					? stock.soldAt

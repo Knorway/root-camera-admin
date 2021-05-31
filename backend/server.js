@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import mongoDB from './config/db.js';
+import cors from 'cors';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 import stockRoutes from './routes/stockRoutes.js';
 import saleRoutes from './routes/saleRoutes.js';
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
 }
 
+app.use(cors({ origin: ['https://vigorous-newton-ce6456.netlify.app'] }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

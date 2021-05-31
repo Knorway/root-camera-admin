@@ -1,6 +1,6 @@
-import { createAction, handleActions } from 'redux-actions';
-import { createRequestThunk } from './utils/createRequestThunk';
+import { handleActions } from 'redux-actions';
 import * as api from './utils/authApi';
+import { createRequestThunk } from './utils/createRequestThunk';
 
 export const LOGIN_AUTH = 'auth/LOGIN';
 const LOGIN_AUTH_SUCCESS = 'auth/LOGIN_SUCCESS';

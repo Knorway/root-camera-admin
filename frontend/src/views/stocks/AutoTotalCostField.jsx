@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { Grid, TextField } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import useEditedStocks from 'src/utils/useEditedStocks';
 
 const initialState = {
@@ -65,7 +65,7 @@ const AutoTotalCostField = ({ listItem, size, stock }) => {
       <Grid item md={size} xs={size}>
         <TextField
           fullWidth
-          label="구매가격 ₩"
+          label="구매가격 KRW"
           type="number"
           name="purchasedForKRW"
           onChange={handleCountTotalCount}

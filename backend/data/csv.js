@@ -71,6 +71,8 @@ const filter = (stock) => {
 	return filtered;
 };
 
+let s = 'kim';
+
 export const importCsv = (path, importFn) => {
 	const result = [];
 

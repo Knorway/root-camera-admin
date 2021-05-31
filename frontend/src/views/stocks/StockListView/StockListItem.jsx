@@ -261,7 +261,7 @@ const StockListItem = ({ stock }) => {
                 <Grid item md={2} xs={2}>
                   <TextField
                     fullWidth
-                    label="구매가격 $"
+                    label="구매가격 USD"
                     name="purchasedForUSD"
                     onChange={handleChange}
                     required
@@ -299,6 +299,7 @@ const StockListItem = ({ stock }) => {
                   <TextField
                     id="filled-textarea"
                     label="비고"
+                    placeholder="추가금액"
                     multiline
                     name="meta_inStock"
                     defaultValue={stock.meta_inStock}
