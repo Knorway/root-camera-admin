@@ -70,7 +70,9 @@ const StockListItem = ({ stock }) => {
         </TableCell>
         <TableCell>{stock.serialNumber}</TableCell>
         <TableCell>{stock.name}</TableCell>
-        <TableCell>{`${stock.totalPurchaseCost}원`}</TableCell>
+        <TableCell>
+          {stock.totalPurchaseCost ? `${stock.totalPurchaseCost}원` : '0원'}
+        </TableCell>
         <TableCell>{stock.stockedAt?.substring(0, 10)}</TableCell>
       </TableRow>
       <TableRow>

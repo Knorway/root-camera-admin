@@ -1,24 +1,20 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+/* eslint-disable react/jsx-one-expression-per-line */
 import {
   Box,
   Button,
   Container,
-  Grid,
-  Link,
+  makeStyles,
   TextField,
-  Typography,
-  makeStyles
+  Typography
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
+import { Formik } from 'formik';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Page from 'src/components/Page';
-import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, LOGIN_AUTH } from 'src/modules/auth';
 import { useRequest } from 'src/utils/useRequest';
-import { LOGIN_AUTH, loginUser } from 'src/modules/auth';
+import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,42 +89,6 @@ const LoginView = () => {
                     Admin dashboard for managing products of root-camera
                   </Typography>
                 </Box>
-                {/* <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      color="primary"
-                      fullWidth
-                      startIcon={<FacebookIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      fullWidth
-                      startIcon={<GoogleIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid> */}
                 <Box mt={3} mb={1}>
                   <Typography
                     align="center"
@@ -165,6 +125,40 @@ const LoginView = () => {
                   variant="outlined"
                 />
                 <Box my={2}>
+                  <Typography align="center">
+                    데모 계정으로{' '}
+                    <Typography
+                      color="primary"
+                      style={{
+                        display: 'inline-block',
+                        marginBottom: '8px',
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => {
+                        dispatch(
+                          loginUser(
+                            {
+                              query: false,
+                              params: {
+                                email: 'demo@demo.com',
+                                password: '123123'
+                              }
+                            },
+                            (user) => {
+                              localStorage.setItem(
+                                'auth',
+                                JSON.stringify(user)
+                              );
+                              navigate('/app/dashboard', { replace: true });
+                            }
+                          )
+                        );
+                      }}
+                    >
+                      로그인
+                    </Typography>
+                    하기
+                  </Typography>
                   <Button
                     color="primary"
                     disabled={isSubmitting}
@@ -186,12 +180,6 @@ const LoginView = () => {
                     {error.response.data.message}
                   </Typography>
                 )}
-                {/* <Typography color="textSecondary" variant="body1">
-                  Don&apos;t have an account?
-                  <Link component={RouterLink} to="/register" variant="h6">
-                    Sign up
-                  </Link>
-                </Typography> */}
               </form>
             )}
           </Formik>

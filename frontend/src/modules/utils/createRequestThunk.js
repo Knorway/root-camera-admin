@@ -35,9 +35,6 @@ export const createRequestThunk = (type, requestFn) => {
         errorDuringRequest({
           type,
           error
-          // error: error.response.data.message
-          //   ? error.response.data.message
-          //   : error.message
         })
       );
     } finally {

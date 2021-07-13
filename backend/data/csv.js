@@ -60,6 +60,18 @@ const filterStatus = (stock) => {
 	return stock;
 };
 
+const filterSoldFor = (stock) => {
+	if (!stock.soldFor) {
+		return {
+			...stock,
+			soldFor: 0,
+			profit: 0,
+		};
+	}
+
+	return stock;
+};
+
 const filter = (stock) => {
 	let filtered;
 
@@ -67,11 +79,10 @@ const filter = (stock) => {
 	filtered = filterInStock(filtered);
 	filtered = filterSoldFrom(filtered);
 	filtered = filterStatus(filtered);
+	filtered = filterSoldFor(filtered);
 
 	return filtered;
 };
-
-let s = 'kim';
 
 export const importCsv = (path, importFn) => {
 	const result = [];

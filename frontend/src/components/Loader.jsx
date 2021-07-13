@@ -13,7 +13,7 @@ import React from 'react';
 //   }
 // `;
 
-const Loader = () => {
+const Loader = ({ view }) => {
   return (
     <div
       style={{
@@ -29,7 +29,7 @@ const Loader = () => {
           width: '100px',
           height: '100px',
           position: 'absolute',
-          top: 0,
+          top: `${view === 'main' ? '250px' : 0}`,
           left: '50%',
           transform: 'translate(-50%, 50%)'
         }}

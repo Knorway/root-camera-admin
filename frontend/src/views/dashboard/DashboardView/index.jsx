@@ -1,12 +1,10 @@
-import React from 'react';
 import { Container, Grid, makeStyles } from '@material-ui/core';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Loader from 'src/components/Loader';
 import Page from 'src/components/Page';
-import Budget from './Budget';
 import LatestOrders from './LatestOrders';
 import LatestProducts from './LatestProducts';
-import TasksProgress from './TasksProgress';
-import TotalCustomers from './TotalCustomers';
-import TotalProfit from './TotalProfit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,35 +16,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
+  const [recentData, setRecentData] = useState(null);
   const classes = useStyles();
+
+  useEffect(() => {
+    axios.get('/api/stats').then((res) => setRecentData(res.data));
+  }, []);
+
+  if (!recentData) return <Loader view="main" />;
 
   return (
     <Page className={classes.root} title="루트 어드민">
       <Container maxWidth={false}>
         <Grid container spacing={3}>
-          <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <Budget />
-          </Grid>
-          <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <TotalCustomers />
-          </Grid>
-          <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <TasksProgress />
-          </Grid>
-          <Grid item lg={3} sm={6} xl={3} xs={12}>
-            <TotalProfit />
-          </Grid>
-          {/* <Grid item lg={8} md={12} xl={9} xs={12}>
-            <Sales />
-          </Grid>
           <Grid item lg={4} md={6} xl={3} xs={12}>
-            <TrafficByDevice />
-          </Grid> */}
-          <Grid item lg={4} md={6} xl={3} xs={12}>
-            <LatestProducts />
+            <LatestProducts recent={recentData.recentSales} />
           </Grid>
           <Grid item lg={8} md={12} xl={9} xs={12}>
-            <LatestOrders />
+            <LatestOrders recent={recentData.recentStocks} />
           </Grid>
         </Grid>
       </Container>

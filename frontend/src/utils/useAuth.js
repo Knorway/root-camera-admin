@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
   const [status, setStatus] = useState(200);
-  const authError = useSelector((state) => state.request.error, shallowEqual);
+  const authError = useSelector((state) => state.request.error);
   const user = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const useAuth = () => {
   }, [status, user]);
 
   useEffect(() => {
-    if (authError && Object.values(authError)[0]?.response.status === 401) {
+    if (authError && Object.values(authError)[0]?.response?.status === 401) {
       setStatus(401);
     }
   }, []);

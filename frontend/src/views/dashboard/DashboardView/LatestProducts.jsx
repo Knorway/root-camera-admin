@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { v4 as uuid } from 'uuid';
-import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -17,40 +16,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-
-const data = [
-  {
-    id: uuid(),
-    name: 'Dropbox',
-    imageUrl: '/static/images/products/product_1.png',
-    updatedAt: moment().subtract(2, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Medium Corporation',
-    imageUrl: '/static/images/products/product_2.png',
-    updatedAt: moment().subtract(2, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Slack',
-    imageUrl: '/static/images/products/product_3.png',
-    updatedAt: moment().subtract(3, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Lyft',
-    imageUrl: '/static/images/products/product_4.png',
-    updatedAt: moment().subtract(5, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'GitHub',
-    imageUrl: '/static/images/products/product_5.png',
-    updatedAt: moment().subtract(9, 'hours')
-  }
-];
+import ArrowRightIcon from '@material-ui/icons/ChevronRight';
 
 const useStyles = makeStyles({
   root: {
@@ -62,33 +28,38 @@ const useStyles = makeStyles({
   }
 });
 
-const LatestProducts = ({ className, ...rest }) => {
+const LatestProducts = ({ className, recent, ...rest }) => {
   const classes = useStyles();
-  const [products] = useState(data);
+  const navigate = useNavigate();
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardHeader
-        subtitle={`${products.length} in total`}
+        subtitle={`${recent.length} in total`}
         title="최근 판매된 상품"
       />
       <Divider />
       <List>
-        {products.map((product, i) => (
-          <ListItem divider={i < products.length - 1} key={product.id}>
+        {recent.map((stock, i) => (
+          <ListItem divider={i < recent.length - 1} key={stock._id}>
             <ListItemAvatar>
               <img
                 alt="Product"
                 className={classes.image}
-                src={product.imageUrl}
+                src={stock.imageUrl}
+                style={{ display: 'none' }}
               />
             </ListItemAvatar>
             <ListItemText
-              primary={product.name}
-              secondary={`Updated ${product.updatedAt.fromNow()}`}
+              primary={stock.name}
+              secondary={`판매 날짜 ${stock.createdAt.substring(0, 10)}`}
             />
             <IconButton edge="end" size="small">
-              <MoreVertIcon />
+              <ArrowRightIcon
+                color="primary"
+                onClick={() => navigate(`/app/stocks/${stock._id}`)}
+              />
+              {/* <MoreVertIcon /> */}
             </IconButton>
           </ListItem>
         ))}
@@ -97,11 +68,14 @@ const LatestProducts = ({ className, ...rest }) => {
       <Box display="flex" justifyContent="flex-end" p={2}>
         <Button
           color="primary"
-          endIcon={<ArrowRightIcon />}
+          endIcon={<ArrowRightIcon color="primary" />}
           size="small"
           variant="text"
+          onClick={() => {
+            navigate('/app/sales');
+          }}
         >
-          View all
+          전체 보기
         </Button>
       </Box>
     </Card>

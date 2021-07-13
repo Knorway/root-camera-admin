@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import 'src/mixins/chartjs';
 import DashboardView from 'src/views/dashboard/DashboardView';
-import SettingsView from 'src/views/settings/SettingsView';
 import StockListView from 'src/views/stocks/StockListView';
 import DashboardLayout from './layouts/DashboardLayout';
 import MainLayout from './layouts/MainLayout';
@@ -36,7 +34,6 @@ const App = () => {
           <Route path=":id" element={<StockDetailView />} />
         </Route>
         <Route path="/sales" element={<SaleListView />} />
-        <Route path="/settings" element={<SettingsView />} />
         <Route path="*" element={<Navigate to="/404" />} />
       </Route>
     </Routes>

@@ -41,18 +41,18 @@ const items = [
   {
     href: '/app/sales',
     icon: CameraOffIcon,
-    title: '판매이력'
-  },
-  {
-    href: '/app/refunds',
-    icon: CameraOffIcon,
-    title: '환불이력'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: '설정'
+    title: '판매'
   }
+  // {
+  //   href: '/app/refunds',
+  //   icon: CameraOffIcon,
+  //   title: '환불이력'
+  // },
+  // {
+  //   href: '/app/settings',
+  //   icon: SettingsIcon,
+  //   title: '설정'
+  // }
 ];
 
 const useStyles = makeStyles(() => ({

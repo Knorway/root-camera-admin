@@ -35,5 +35,5 @@ export const destroyData = async () => {
 if (process.argv[2] === '-d') {
 	destroyData();
 } else {
-	importCsv('../rootadmin-stocks.csv', importData);
+	importCsv(`${process.cwd()}/backend/rootadmin-stocks.csv`, importData);
 }
